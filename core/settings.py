@@ -43,7 +43,8 @@ INSTALLED_APPS = [
 
     #my_apps
     'home',
-    'accounts'
+    'accounts',
+    'product'
 
 ]
 

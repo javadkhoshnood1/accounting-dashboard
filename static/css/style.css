@@ -26,6 +26,37 @@
 td a{
     padding: 10px;
 }
+.btn-tosi{
+    padding: 5px 13px;
+    font-size: 14px;
+    background-color:#2B4A83 ;
+    border: 1px solid #EEF2F8 ;
+    border-radius: 20px;
+    color:white;
+    transition: all ease-in-out 0.3s;
+
+}
+.btn-tosi:hover{
+    background-color:#EEF2F8 ;
+    border: 1px solid #2B4A83;
+    color: #2B4A83;
+
+
+}
+.btn-outline-tosi{
+    padding: 5px 13px;
+    font-size: 14px;
+    background-color: #EEF2F8;
+    border: 1px solid #2B4A83 ;
+    border-radius: 20px;
+    color:#2B4A83;
+    transition: all ease-in-out 0.3s;
+}
+.btn-outline-tosi:hover{
+    background-color: #2b4a83;
+    color: #EEF2F8;
+
+}
 *{
     font-family: tir;
 }
@@ -62,6 +93,7 @@ a, a:active, a:focus, a:visited {
     text-decoration: none;
     color: #444;
 }
+
 
 ul li {
     list-style: none;
@@ -483,7 +515,7 @@ textarea {
 
 .table td {
     white-space: nowrap;
-    color: #444;
+    color: black;
     padding: 13px 30px;
     font-size: 13px;
 }
@@ -1016,7 +1048,8 @@ textarea {
 
 .item-delete:before {
     content: '\e129';
-    font-size: 16px;
+    font-size: 20px;
+    color: red;
 }
 
 .item-reject:before {
@@ -1032,7 +1065,8 @@ textarea {
 }
 .item-eye:before {
     content: '\e065';
-    font-size: 14px;
+    font-size: 18px;
+    color: yellow;
 }
 .item-lock:before {
     content: '\E0c4';
@@ -1046,7 +1080,8 @@ textarea {
 
 .item-edit:before {
     content: '\e141';
-    font-size: 16px;
+    font-size: 20px;
+    color: green;
 }
 .tab__box{
     background: #fff;
@@ -1059,11 +1094,12 @@ textarea {
     padding: 8px 10px;
 }
 .tab__box .tab__item {
-    color: #8f9395;
-    padding: 5px 11px;
+    color: black;
+    padding: 8px 18px;
     font-size: 13px;
     cursor: pointer;
 }
+
 
 .tab__box .tab__item.is-active {
     border: 1px solid #e6e6ea;
@@ -1116,9 +1152,7 @@ textarea {
     display: none;
 }
 
-select {
-    display: none;
-}
+
 .dropdown-select {
     margin-bottom: 15px;
     background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%);
