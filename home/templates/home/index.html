@@ -5,137 +5,53 @@ main dashboard
 {% endblock %}
 
 {% block content %}
-<div class="content">
-    <div class="header d-flex item-center bg-white width-100 border-bottom ">
-        <div class="header__right d-flex flex-grow-1 item-center">
-            <span class="bars"></span>
-                <img width="100" height="45" src="{% static 'img/logo3.png' %}"/>
-                /
-                <div class="breadcrumb">
-                    <ul>
-                        <li><a href="{% url 'home:index' %}" title="پیشخوان">پیشخوان</a></li>
-                      </ul>
-                </div>
-        </div>
-        <div class="header__left d-flex flex-end item-center margin-top-2">
-            <div class="notification" style="margin-left: 8px;">
-                <img width="33" height="33" src="{% static 'img/user2.png' %}"/>
-                <div class="dropdown__notification">
-                    <div class="content__notification">
-                        <span class="font-size-13">موردی برای نمایش وجود ندارد</span>
-                    </div>
-                </div>
-            </div>
-            <a>
-                <img width="35" height="35" src="{% static 'img/logout2.png' %}"/>
-            </a>
-        </div>
-    </div>
-   
-    <div class="main-content">
-        <div class="row no-gutters font-size-13 margin-bottom-10">
-            <div class="col-3 padding-20 border-radius-3 bg-white margin-left-10 margin-bottom-10">
-                <p> موجودی حساب فعلی </p>
-                <p>2,500,000 تومان</p>
-            </div>
-            <div class="col-3 padding-20 border-radius-3 bg-white margin-left-10 margin-bottom-10">
-                <p> کل فروش دوره ها</p>
-                <p>2,500,000 تومان</p>
-            </div>
-            <div class="col-3 padding-20 border-radius-3 bg-white margin-left-10 margin-bottom-10">
-                <p> کارمزد کسر شده </p>
-                <p>2,500,000 تومان</p>
-            </div>
-            <div class="col-3 padding-20 border-radius-3 bg-white margin-bottom-10">
-                <p> درآمد خالص </p>
-                <p>2,500,000 تومان</p>
-            </div>
-        </div>
-        <div class="row no-gutters font-size-13 margin-bottom-10">
-            <div class="col-3 padding-20 border-radius-3 bg-white margin-left-10 margin-bottom-10">
-                <p> درآمد امروز </p>
-                <p>500,000 تومان</p>
-            </div>
-            <div class="col-3 padding-20 border-radius-3 bg-white margin-left-10 margin-bottom-10">
-                <p> درآمد 30 روز گذاشته</p>
-                <p>2,500,000 تومان</p>
-            </div>
-            <div class="col-3 padding-20 border-radius-3 bg-white margin-left-10 margin-bottom-10">
-                <p> تسویه حساب در حال انجام </p>
-                <p>0 تومان </p>
-            </div>
-            <div class="col-3 padding-20 border-radius-3 bg-white  margin-bottom-10">
-                <p>تراکنش های موفق امروز (0) تراکنش </p>
-                <p>2,500,000 تومان</p>
-            </div>
-        </div>
-        <div class="row no-gutters font-size-13 margin-bottom-10">
-            <div class="col-8 padding-20 bg-white margin-bottom-10 margin-left-10 border-radius-3">
-                محل قرار گیری نمودار
-            </div>
-            <div class="col-4 info-amount padding-20 bg-white margin-bottom-12-p margin-bottom-10 border-radius-3">
 
-                <p class="title icon-outline-receipt">موجودی قابل تسویه </p>
-                <p class="amount-show color-444">600,000<span> تومان </span></p>
-                <p class="title icon-sync">در حال تسویه</p>
-                <p class="amount-show color-444">0<span> تومان </span></p>
-                <a href="/" class=" all-reconcile-text color-2b4a83">همه تسویه حساب ها</a>
-            </div>
-        </div>
-        <div class="row bg-white no-gutters font-size-13">
-            <div class="title__row">
-                <p>تراکنش های اخیر شما</p>
-                <a class="all-reconcile-text margin-left-20 color-2b4a83">نمایش همه تراکنش ها</a>
-            </div>
-            <div class="table__box">
-                <table width="100%" class="table">
-                    <thead role="rowgroup">
-                    <tr role="row" class="title-row">
-                        <th>شناسه پرداخت</th>
-                        <th>ایمیل پرداخت کننده</th>
-                        <th>مبلغ (تومان)</th>
-                        <th>درامد شما</th>
-                        <th>درامد سایت</th>
-                        <th>نام دوره</th>
-                        <th>تاریخ و ساعت</th>
-                        <th>وضعیت</th>
-                        <th>عملیات</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr role="row">
-                        <td><a href=""> 1</a></td>
-                        <td><a href="">admin@netcopy.ir</a></td>
-                        <td><a href="">600,000</a></td>
-                        <td><a href="">400,000</a></td>
-                        <td><a href="">400,000</a></td>
-                        <td><a href="">خرید دوره - دوره متخصص php سطح مقدماتی</a></td>
-                        <td><a href=""> 22:14:48 1399/02/23</a></td>
-                        <td><a href="" class="text-success">پرداخت موفق</a></td>
-                        <td class="i__oprations">
-                            <a href="" class="item-delete margin-left-10" title="حذف"></a>
-                            <a href="edit-transaction.html" class="item-edit" title='ویرایش'></a>
-                        </td>
-                    </tr>
-                    <tr role="row">
-                        <td><a href=""> 1</a></td>
-                        <td><a href="">admin@netcopy.ir</a></td>
-                        <td><a href="">600,000</a></td>
-                        <td><a href="">400,000</a></td>
-                        <td><a href="">400,000</a></td>
-                        <td><a href="">خرید دوره - دوره متخصص php سطح مقدماتی</a></td>
-                        <td><a href=""> 22:14:48 1399/02/23</a></td>
-                        <td><a href="" class="text-error">پرداخت ناموفق</a></td>
-                        <td class="i__oprations">
-                            <a href="" class="item-delete margin-left-10" title="حذف"></a>
-                            <a href="edit-transaction.html" class="item-edit" title='ویرایش'></a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+<div style="height: 600px;" class="d-flex justify-content-center align-items-center">
+  <button
+  class="btn btn-outline-success"
+type="button"
+data-bs-toggle="modal"
+data-bs-target="#login-form"
+data-bs-whatever="@mdo">
+ورود به حساب 
+</button>
 </div>
-</body>
+<div class="modal fade" id="login-form">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" id="modal-login">
+      <div class="modal-header" >
+        <h5 class="modal-title" id="exampleModalLabel" style="font-size: 28px;">فرم ورود مدیر  به فروشگاه </h5>
+          <button
+          type="button"
+          style="background-color: red;margin: 0 auto;"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form method="post"  >
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label"
+              >شماره تماس :</label
+            >
+            <input type="text" name="username" class="form-control" id="recipient-name" />
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">رمز عبور :</label>
+            <input type="password" name="password" class="form-control" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              بازگشت 
+            </button>
+            <button type="submit" class="btn btn-primary">ورود </button>
+          </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -7,11 +7,39 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-
+@font-face {
+    font-family: yekan;
+    src: url(Yekan.ttf);
+}
+@font-face {
+    font-family: tir;
+    src: url(tir.ttf);
+}
+@font-face {
+    font-family: avini;
+    src: url(avini.ttf);
+}
+.profile__name{
+    font-family: avini;
+    font-size: 22px;
+}
+td a{
+    padding: 10px;
+}
+*{
+    font-family: tir;
+}
 *:before, *:after {
     font-family: digikala;
 }
 
+.bg-tosi{
+    background-color: #EEF2F8;
+    border-radius: 20px;
+    padding: 20px;
+    color: #2B4A83;
+
+}
 input, button {
     font-family: "Vazir";
 }
@@ -743,7 +771,7 @@ textarea {
 .profile__name {
     width: 100%;
     margin-top: 10px;
-    font-size: 15px;
+    font-size: 24px;
     margin-right: -6px;
 }
 

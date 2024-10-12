@@ -2,7 +2,25 @@
 
 <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
 <script src="{% static 'js/js.js' %}"></script>
-<script>
-    console.log("javad");
-    
-</script>
+<script src="{% static 'js/toaster.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<!-- inject js end -->
+{% for message in messages %}
+      {% if message.tags == 'success' %}
+        <script>
+toastr["success"]("{{message}}")       
+        </script>
+      {% else %}
+      <!-- sweetalert js -->
+      <script>
+        toastr["error"]("{{message}}")       
+
+      </script>
+      {% endif %}
+    {% endfor %}
+
+    <script>
+      function comingsoon(){
+        Swal.fire("این بخش هنوز به سایت اضافه نشده است !");
+      }
+      </script>
