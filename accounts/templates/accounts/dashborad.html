@@ -3,9 +3,34 @@
 {% load static %}
  {% block title %}
 دشبورد من 
- {% endblcok %}
+ {% endblock %}
 
 {% block content %}
+<div class="content">
+    <div class="header d-flex item-center bg-white width-100 border-bottom ">
+        <div class="header__right d-flex flex-grow-1 item-center">
+            <span class="bars"></span>
+                <img style="margin-right: 5px;" width="100" height="45" src="{% static 'img/logo3.png' %}"/>
+                /
+                        <a style="text-decoration: none;" href="{% url 'home:index' %}" title="پیشخوان">پیشخوان</a>
+        </div>
+        <div class="header__left d-flex flex-end item-center margin-top-2">
+            <div class="notification" style="margin-left: 8px;">
+                <img width="33" height="33" src="{% static 'img/user2.png' %}"/>
+                <div class="dropdown__notification">
+                    <div class="content__notification">
+                        <span class="font-size-13">موردی برای نمایش وجود ندارد</span>
+                    </div>
+                </div>
+            </div>
+            <a
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#logout"
+            data-bs-whatever="@mdo">
+                <img width="35" height="35" src="{% static 'img/logout2.png' %}"/>
+        </a>
+        </div>
+    </div>
 
-<h1>اوکیه دشبورد من </h1>
 {% endblock %}

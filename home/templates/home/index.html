@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-main dashboard 
+حسابداری پویا 
 {% endblock %}
 
 {% block content %}
@@ -30,7 +30,7 @@ data-bs-whatever="@mdo">
         ></button>
       </div>
       <div class="modal-body">
-        <form method="post"  >
+        <form method="post" action="{% url 'accounts:login' %}" >
           {% csrf_token %}
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label"

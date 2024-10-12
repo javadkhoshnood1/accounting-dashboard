@@ -6,5 +6,7 @@ from django.views import View
 class HomePageView(View):
 
     def get(self,request):
-
-        return render(request,"home/index.html")
+        if request.user.is_authenticated:
+            return redirect("/dashboard/")
+        else:
+            return render(request,"home/index.html")
