@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+{{customer.fullname}}
+{% endblock %}
+{% block content %}
+<div class="content">
+    <div class="header d-flex item-center bg-white width-100 border-bottom ">
+        <div class="header__right d-flex flex-grow-1 item-center">
+            <span class="bars"></span>
+                <img style="margin-right: 5px;" width="100" height="45" src="{% static 'img/logo3.png' %}"/>
+                /
+                        <a style="text-decoration: none;" href="{% url 'home:index' %}" title="پیشخوان">پیشخوان</a>/
+                        <a style="text-decoration: none;" href="{% url 'customer:list_customer' %}" title="پیشخوان">لیست مشتریان  </a>/
+                        <a style="text-decoration: none;" href="{% url 'customer:detail_customer' customer.id %}" title="پیشخوان">{{customer.fullname}}</a>
+        </div>
+        <div class="header__left d-flex flex-end item-center margin-top-2">
+            <div class="notification" style="margin-left: 8px;">
+                <img width="33" height="33" src="{% static 'img/user2.png' %}"/>
+                <div class="dropdown__notification">
+                    <div class="content__notification">
+                        <span class="font-size-13">موردی برای نمایش وجود ندارد</span>
+                    </div>
+                </div>
+            </div>
+            <a
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#logout"
+            data-bs-whatever="@mdo">
+                <img width="35" height="35" src="{% static 'img/logout2.png' %}"/>
+        </a>
+        </div>
+    </div>
+
+    <div class="main-content" style="background-color: #dcdcdc;">
+        <div class="user-info bg-white padding-30 font-size-13">
+            <form method="post">
+                {% csrf_token %}
+                <div class="row mb-4">
+                    <div class="col-lg-6" style="font-size: 15px;">
+                        ویرایش مشتری : <span style="color: #2B4A83;">{{customer.fullname}}</span>
+                    </div>
+                    
+                
+                    <div class="col-lg-6 d-flex justify-content-end align-items-end">
+                        <a
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#delete_product"
+                        data-bs-whatever="@mdo"
+                        class="btn btn-sm btn-outline-danger">
+                            حذف مشتری 
+
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <input type="number" hidden name="id" class="text" placeholder="نام کاربری" value="{{customer.id}}">
+
+                        <label>نام و نام خانوادگی  : </label>
+                        <input type="text" name="fullname" class="text" placeholder="نام کاربری" value="{{customer.fullname}}">
+
+                    </div>
+                    <div class="col-lg-6">
+
+                        <label>شماره تماس  : </label>
+                        <input type="text" name="phone" class="text" placeholder="شماره تماس" value="{{customer.phone}}">
+
+                    </div>
+                    <div class="col-lg-6">             
+                        <label>کل حساب  (تومان) :  </label>
+                        
+                        <input disabled type="text" name="price" class="text text-left"  value="{{customer.price|intcomma:0}} تومان ">
+                    </div>
+                   
+                    <div class="col-lg-6">
+                        <label>پرداخت شده    (تومان) :  </label>
+
+                        <input class="text text-left" type="text" name="price_paid_all" disabled value="{{customer.price_paid_all|intcomma:0}} تومان">
+
+
+                    </div>
+                    <div class="col-lg-6">
+                        <label>باقی مانده حساب    (تومان) :  </label>
+                        <input class="text text-left" type="text" name="sod" disabled value="{{customer.price_mandeh|intcomma:0}} تومان">
+
+
+                    </div>
+                    
+                    <div class="col-lg-12">
+                        <label>
+                            عکس مشتری:
+                        </label>
+                        <input class="text text-left form-control" type="file" placeholder="عکس مشتری " name="image">
+
+                    </div>
+                </div>
+                
+               
+                <br>
+                <label>
+                    توضیحات :
+                </label>
+                <input  name="discription" class="text" value="{{customer.discription}}"  />
+                <br>
+                <br>
+                <button class="btn btn-netcopy_net">ذخیره تغییرات</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="delete_product">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" id="modal-login">
+        <div class="modal-header" >
+          <h5 class="modal-title" id="exampleModalLabel" style="font-size: 28px;">فرم تاییده حذف مشتری  از فروشگاه </h5>
+            <button
+            type="button"
+            style="background-color: red;margin: 0 auto;"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+            <p style="padding: 20px 10px;">
+                آیا مایل به حذف این مشتری   هستید ؟
+            </p>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  بازگشت 
+                </button>
+                <a href="{% url 'customer:delete_customer' customer.id %}"  class="btn btn-danger">حذف مشتری   </a>
+              </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</body>
+
+{% endblock %}

@@ -128,8 +128,8 @@
     
              <tr role="row" >
               
-              <td><a >{{customer.id}}</a></td>
-              <td><a style="color: black;text-decoration: none;">{{customer.fullname}}</a></td>
+              <td><a href="{% url 'customer:detail_customer' customer.id %}" >{{customer.id}}</a></td>
+              <td><a href="{% url 'customer:detail_customer' customer.id %}" style="color: black;text-decoration: none;">{{customer.fullname}}</a></td>
               <td><a  style="color: black;text-decoration: none;">{{customer.phone}}</a></td>
               <td><a  style="color: black;text-decoration: none;"> {{customer.price|intcomma:0}} تومان </a></td>
               <td><a  style="color: black;text-decoration: none;"> {{customer.price_paid_all|intcomma:0}} تومان </a></td>
@@ -153,9 +153,9 @@
               
               <td>
                  
-                  <a style="text-decoration: none;"  class="item-eye " title="مشاهده"></a>
-                  <a style="text-decoration: none;" class="item-edit " title="ویرایش"></a>
-                  <a style="text-decoration: none;" class="item-delete" title="حذف"></a>
+                  <a style="text-decoration: none;"  class="item-eye " href="{% url 'customer:detail_customer' customer.id %}" title="مشاهده"></a>
+                  <a style="text-decoration: none;" class="item-edit " href="{% url 'customer:detail_customer' customer.id %}" title="ویرایش"></a>
+                  <a style="text-decoration: none;" class="item-delete" href="{% url 'customer:delete_customer' customer.id %}"  title="حذف"></a>
     
               </td>
           </tr>
