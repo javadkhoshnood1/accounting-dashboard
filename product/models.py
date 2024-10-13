@@ -41,7 +41,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = "محصول"
         verbose_name_plural = "محصولات"
-    
+        ordering = ["-id"]    
     def sod_khles(self):
         self.sod = self.price_selling - self.price
         self.save()
@@ -53,6 +53,7 @@ class Product(models.Model):
 
     def created_date(self):
         return date2jalali(self.created_at)
+
 
 
 # class AvailableProduct(models.Model):

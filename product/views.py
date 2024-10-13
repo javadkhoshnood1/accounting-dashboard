@@ -8,17 +8,17 @@ class ListProductView(TemplateView):
     template_name = "product/list.html"
 
     def get(self, request, *args, **kwargs):
-        products = Product.objects.filter(user=request.user).order_by("-created_at")
+        products = Product.objects.filter(user=request.user)
         categories = Category.objects.filter(user=request.user).order_by("-created_at")
         search_p = request.GET.get("search_p")
         available = request.GET.get("available")
         unavailable = request.GET.get("unavailable")
         if available:
-            products = Product.objects.filter(user=request.user).order_by("-created_at").filter(is_mojod=True)
+            products = Product.objects.filter(user=request.user).filter(is_mojod=True)
         if unavailable:
-            products = Product.objects.filter(user=request.user).order_by("-created_at").filter(is_mojod=False)
+            products = Product.objects.filter(user=request.user).filter(is_mojod=False)
         if search_p  :
-            products = Product.objects.filter(user=request.user).order_by("-created_at").filter(title__contains=search_p)
+            products = Product.objects.filter(user=request.user).filter(title__contains=search_p)
             messages.success(request,f"{products.count()} عدد محصول یافت شد ")
 
         return render(request,"product/list.html",{"products":products,"categories":categories ,"search_p":search_p ,"available":available,"unavailable":unavailable})
@@ -45,7 +45,7 @@ class CtegoriesView(TemplateView):
         categories = Category.objects.filter(user=request.user).order_by("-created_at")
         search_c = request.GET.get("search_c")
         if search_c  :
-            categories = Category.objects.filter(user=request.user).order_by("-created_at").filter(title__contains=search_c)
+            categories = Category.objects.filter(user=request.user).filter(title__contains=search_c)
             messages.success(request,f"{categories.count()} عدد دسته بندی  یافت شد ")
         return render(request,"product/categories.html",{"categories":categories,"search_c":search_c}) 
 

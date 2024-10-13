@@ -29,9 +29,14 @@
   
         <li class="item-li i-courses"><a style="text-decoration: none;color: black;"  href="{% url 'product:list_p' %}"> محصولات من </a></li>
         {% endif %}
-        <li class="item-li i-users"><a style="text-decoration: none;color: black;"  href="users.html"> مشتریان  من </a></li>
 
-
+        {% if request.resolver_match.url_name == 'list_customer' or request.resolver_match.url_name == 'detail_p' %}
+        <li class="item-li i-users is-active"><a style="text-decoration: none;color: black;"  href="{% url 'customer:list_customer' %}"> مشتریان  من </a></li>
+  
+        {% else %}
+  
+        <li class="item-li i-users"><a style="text-decoration: none;color: black;"  href="{% url 'customer:list_customer' %}"> مشتریان  من </a></li>
+        {% endif %}
 
         {% if request.resolver_match.url_name == 'list_p_c' %}
         <li class="item-li i-categories is-active"><a style="text-decoration: none;color: black;"  href="{% url 'product:list_p_c' %}">دسته بندی ها</a></li>
