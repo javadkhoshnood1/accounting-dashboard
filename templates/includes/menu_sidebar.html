@@ -22,7 +22,7 @@
       {% endif %}
 
 
-        {% if request.resolver_match.url_name == 'list_p' %}
+        {% if request.resolver_match.url_name == 'list_p' or request.resolver_match.url_name == 'detail_p' %}
         <li class="item-li i-courses is-active"><a style="text-decoration: none;color: #2B4A83;"  href="{% url 'product:list_p' %}"> محصولات من </a></li>
   
         {% else %}

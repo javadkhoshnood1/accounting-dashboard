@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+{{product}}
+{% endblock %}
+{% block content %}
+<div class="content">
+    <div class="header d-flex item-center bg-white width-100 border-bottom ">
+        <div class="header__right d-flex flex-grow-1 item-center">
+            <span class="bars"></span>
+                <img style="margin-right: 5px;" width="100" height="45" src="{% static 'img/logo3.png' %}"/>
+                /
+                        <a style="text-decoration: none;" href="{% url 'home:index' %}" title="پیشخوان">پیشخوان</a>/
+                        <a style="text-decoration: none;" href="{% url 'product:list_p' %}" title="پیشخوان">لیست محصولات </a>/
+                        <a style="text-decoration: none;" href="{% url 'product:detail_p' product.id %}" title="پیشخوان">{{product.title}}</a>
+        </div>
+        <div class="header__left d-flex flex-end item-center margin-top-2">
+            <div class="notification" style="margin-left: 8px;">
+                <img width="33" height="33" src="{% static 'img/user2.png' %}"/>
+                <div class="dropdown__notification">
+                    <div class="content__notification">
+                        <span class="font-size-13">موردی برای نمایش وجود ندارد</span>
+                    </div>
+                </div>
+            </div>
+            <a
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#logout"
+            data-bs-whatever="@mdo">
+                <img width="35" height="35" src="{% static 'img/logout2.png' %}"/>
+        </a>
+        </div>
+    </div>
+
+    <div class="main-content" style="background-color: #dcdcdc;">
+        <div class="user-info bg-white padding-30 font-size-13">
+            <form method="post">
+                {% csrf_token %}
+                <div class="row mb-4">
+                    <div class="col-lg-6" style="font-size: 15px;">
+                        ویرایش محصول : <span style="color: #2B4A83;">{{product.title}}</span>
+                    </div>
+                    
+                
+                    <div class="col-lg-6 d-flex justify-content-end align-items-end">
+                        <a
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#delete_product"
+                        data-bs-whatever="@mdo"
+                        class="btn btn-sm btn-outline-danger">
+                            حذف محصول 
+
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <input type="number" hidden name="id" class="text" placeholder="نام کاربری" value="{{product.id}}">
+
+                        <label>عنوان محصول : </label>
+                        <input type="text" name="title" class="text" placeholder="نام کاربری" value="{{product.title}}">
+
+                    </div>
+                    <div class="col-lg-6">             
+                        <label>قیمت آخرین خرید  (تومان) :  </label>
+                        
+                        <input disabled type="text" name="price" class="text text-left" placeholder="ایمیل" value="{{product.price|intcomma:0}} تومان ">
+                    </div>
+                    <div class="col-lg-6">  
+                        <label>درصد سود من            (درصد)
+                            :  </label>
+                           <input type="number" name="percent_sod" class="text text-left"  value="{{product.percent_sod}}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label>قیمت فروش   (تومان) :  </label>
+
+                        <input class="text text-left" type="text" name="price_selling" disabled value="{{product.price_selling|intcomma:0}} تومان">
+
+
+                    </div>
+                    <div class="col-lg-6">
+                        <label>سود تکی محصول   (تومان) :  </label>
+                        <input class="text text-left" type="text" name="sod" disabled value="{{product.sod|intcomma:0}} تومان">
+
+
+                    </div>
+                    <div class="col-lg-6">
+                        <label>وضعیت موجودی   (عدد ) :  </label>
+
+                        <input class="text text-left" type="text" name="mojodi" disabled value="{{product.mojodi|intcomma:0}} عدد">
+
+                    </div>
+                    <div class="col-lg-12">
+                        <label>
+                            عکس محصول:
+                        </label>
+                        <input class="text text-left form-control" type="file" placeholder="عکس محصول " name="image">
+
+                    </div>
+                </div>
+                
+               
+                <br>
+                <label>
+                    توضیحات :
+                </label>
+                <input  name="discription" class="text" value="{{product.discription}}"  />
+                <br>
+                <br>
+                <button class="btn btn-netcopy_net">ذخیره تغییرات</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="delete_product">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" id="modal-login">
+        <div class="modal-header" >
+          <h5 class="modal-title" id="exampleModalLabel" style="font-size: 28px;">فرم تاییده حذف محصول  از فروشگاه </h5>
+            <button
+            type="button"
+            style="background-color: red;margin: 0 auto;"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+            <p style="padding: 20px 10px;">
+                آیا مایل به حذف این محصول هستید هستید ؟
+            </p>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  بازگشت 
+                </button>
+                <a  href="{% url 'product:delete_p' product.id  %}" class="btn btn-danger">حذف محصول  </a>
+              </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</body>
+
+{% endblock %}

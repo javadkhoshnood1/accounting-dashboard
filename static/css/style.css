@@ -7,6 +7,10 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+label{
+    color: #2B4A83;
+    margin-bottom: 5px;
+}
 @font-face {
     font-family: yekan;
     src: url(Yekan.ttf);

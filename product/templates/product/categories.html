@@ -38,7 +38,10 @@
     <div class="tab__box" style="display: flex; justify-content: space-between;padding: 0px 10px;">
         <div class="tab__items">
             <a style="text-decoration: none;background-color: #EEF2F8 ;border-radius: 20px;" class="tab__item "  href="courses.html">لیست دسته بندی  ها</a>
-
+          /
+          <p class="d-inline-block font-size-13" style="color: gray;">
+             {{categories.count}} عدد دسته بندی برای شما یافت شد 
+          </p>
         </div>
         <div class="tab__items">
             
@@ -54,17 +57,29 @@
     </div>
     <div class="bg-white padding-20">
         <div class="t-header-search">
-            <form action="" onclick="event.preventDefault();">
+            <form method="get">
                 <div class="t-header-searchbox font-size-13">
-                    <div type="text" class="text search-input__box ">جستجوی دوره</div>
+                    <div type="text" class="text search-input__box ">جستجوی دسته بندی</div>
                     <div class="t-header-search-content ">
-                        <input type="text"  class="text"  placeholder="نام دوره">
-                        <input type="text"  class="text" placeholder="ردیف">
-                        <input type="text"  class="text" placeholder="قیمت">
-                        <input type="text"  class="text" placeholder="نام مدرس">
-                        <input type="text"  class="text margin-bottom-20" placeholder="دسته بندی">
-                        <btutton class="btn btn-netcopy_net">جستجو</btutton>
+                      {% if search_c %}
+                      <label> نام دسته بندی : </label>
+                        <input type="text" name="search_c"  class="text" value="{{search_c}}"  placeholder="عنوان دسته بندی ">
+                        {% else %}
+                        <input type="text" name="search_c"   class="text"   placeholder="عنوان دسته بندی ">
+
+                        {% endif %}
+                        <button type="submit" class="btn btn-netcopy_net">جستجو</button>
                     </div>
+                    {% if search_c %}
+                    <p class="d-inline-block font-size-13" style="color: gray;">
+                     جستجوی : {{search_c}}
+                     /
+                     <a class="text-danger" href="{% url 'product:list_p' %}">لفو جستجو </a>
+
+                   </p>
+                    {% else %}
+
+                    {% endif %}
                 </div>
             </form>
         </div>
@@ -78,6 +93,7 @@
                 <th>شناسه</th>
                 <th>عنوان</th>
                 <th> توضیحات </th>
+                <th> تعداد محصولات  </th>
                 <th> تاریخ ایجاد  </th>
                 
                 
@@ -88,16 +104,16 @@
            {% for item in categories %}
 
            <tr role="row" >
-            <td><a href="">{{item.id}}</a></td>
-            <td><a href="" style="color: black;text-decoration: none;">{{item.title}}</a></td>
-            <td><a href="" style="color: black;text-decoration: none;">{{item.discription}}</a></td>
-            <td><a href="" style="color: black;text-decoration: none;">{{item.created_date}}</a></td>
+            <td><a >{{item.id}}</a></td>
+            <td><a  style="color: black;text-decoration: none;">{{item.title}}</a></td>
+            <td><a  style="color: black;text-decoration: none;">{{item.discription}}</a></td>
+            <td><a  style="color: black;text-decoration: none;">{{item.product_set.count}} عدد</a></td>
+            <td><a  style="color: black;text-decoration: none;">{{item.created_date}}</a></td>
            
             
             <td>
-                <a style="text-decoration: none;" href="" class="item-delete mlg-15" title="حذف"></a>
-                <a style="text-decoration: none;" href="" target="_blank" class="item-eye mlg-15" title="مشاهده"></a>
-                <a style="text-decoration: none;" href="" class="item-edit " title="ویرایش"></a>
+             
+              <a style="text-decoration: none;" href="{% url 'product:delete_catgeory' item.id %}" class="item-delete " title="حذف"></a>
             </td>
         </tr>
            {% endfor %}

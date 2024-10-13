@@ -34,12 +34,31 @@
         </div>
     </div>
 
-<div class="main-content" style="background-color: #dcdcdc;">
+<div class="main-content" style="background-color: #dcdcdc;height: 530px;">
     <div class="tab__box" style="display: flex; justify-content: space-between;padding: 0px 10px;">
         <div class="tab__items">
-            <a style="text-decoration: none;background-color: #EEF2F8 ;border-radius: 20px;" class="tab__item "  href="courses.html">لیست دوره ها</a>
-            <a style="text-decoration: none;" class="tab__item" href="approved.html">دوره های تایید شده</a>
-            <a style="text-decoration: none;" class="tab__item" href="new-course.html">دوره های تایید نشده</a>
+          {% if available %}
+
+          <a style="text-decoration: none" class="tab__item "  href="{% url 'product:list_p' %}">لیست محصولات </a>
+          <a style="text-decoration: none;;background-color: #EEF2F8 ;border-radius: 20px;" class="tab__item" href="/product/list/?available=True">محصولات موجود </a>
+          <a style="text-decoration: none;" class="tab__item" href="/product/list/?unavailable=True">محصولات ناموجود</a>
+          {% elif unavailable %}
+          <a style="text-decoration: none;" class="tab__item "  href="{% url 'product:list_p' %}">لیست محصولات </a>
+          <a style="text-decoration: none;" class="tab__item" href="/product/list/?available=True">محصولات موجود </a>
+          <a style="text-decoration: none;background-color: #EEF2F8 ;border-radius: 20px;" class="tab__item" href="/product/list/?unavailable=True">محصولات ناموجود</a>
+
+          {% else %}
+          <a style="text-decoration: none;background-color: #EEF2F8 ;border-radius: 20px;" class="tab__item "  href="{% url 'product:list_p' %}">لیست محصولات </a>
+          <a style="text-decoration: none;" class="tab__item" href="/product/list/?available=True">محصولات موجود </a>
+          <a style="text-decoration: none;" class="tab__item" href="/product/list/?unavailable=True">محصولات ناموجود</a>
+
+          {% endif %}
+          
+            
+            /
+            <p class="d-inline-block font-size-13" style="color: gray;">
+              {{products.count}} عدد محصول برای شما یافت شد 
+           </p>
         </div>
         <div class="tab__items">
             <button class="btn-tosi" 
@@ -59,65 +78,107 @@
     </div>
     <div class="bg-white padding-20">
         <div class="t-header-search">
-            <form action="" onclick="event.preventDefault();">
+            <form method="get" >
                 <div class="t-header-searchbox font-size-13">
-                    <div type="text" class="text search-input__box ">جستجوی دوره</div>
-                    <div class="t-header-search-content ">
-                        <input type="text"  class="text"  placeholder="نام دوره">
-                        <input type="text"  class="text" placeholder="ردیف">
-                        <input type="text"  class="text" placeholder="قیمت">
-                        <input type="text"  class="text" placeholder="نام مدرس">
-                        <input type="text"  class="text margin-bottom-20" placeholder="دسته بندی">
-                        <btutton class="btn btn-netcopy_net">جستجو</btutton>
-                    </div>
+                    <div type="text" class="text search-input__box ">جستجوی محصولات </div>
+                    <div class="t-header-search-content  ">
+                      <label> اسم محصول :</label>
+                      {% if search_p %}
+
+                        <input type="text" required  class=" text search_p" value="{{search_p}}" name="search_p"  placeholder="نام محصول">
+                        {% else %}
+                        <input type="text" required  class=" text search_p"  name="search_p"  placeholder="نام محصول">
+
+                        {% endif %}
+                        <button type="submit" class="btn btn-netcopy_net">جستجو</button>
+                      </div>
+                     {% if search_p %}
+                     <p class="d-inline-block font-size-13" style="color: gray;">
+                      جستجوی : {{search_p}}
+                      /
+                      <a class="text-danger" href="{% url 'product:list_p' %}">لفو جستجو </a>
+
+                    </p>
+                     {% else %}
+
+                     {% endif %}
                 </div>
             </form>
         </div>
     </div>
+    {% if products %}
+
+
     <div class="table__box">
-        <table class="table">
+      <table class="table">
 
-            <thead role="rowgroup">
-            <tr role="row" class="title-row ">
-                <th>شناسه</th>
-                <th>عنوان</th>
-                <th>قیمت خرید </th>
-                <th>درصد سود </th>
-                <th >قیمت فروش </th>
-                <th >سود تکی </th>
-                <th>موجودی </th>
-                <th>وضعیت </th>
-                <th>تاریخ ایجاد  </th>
-                
-                <th>عملیات</th>
-            </tr>
-            </thead>
-            <tbody>
-           {% for product in products %}
+          <thead role="rowgroup">
+          <tr role="row" class="title-row ">
+              <th>شناسه</th>
+              <th>عنوان</th>
+              <th>دسته بندی</th>
+              <th>قیمت خرید </th>
+              <th>درصد سود </th>
+              <th >قیمت فروش </th>
+              <th >سود تکی </th>
+              <th>موجودی </th>
+              <th>وضعیت </th>
+              <th>تاریخ ایجاد  </th>
+              
+              <th>عملیات</th>
+          </tr>
+          </thead>
+          <tbody>
+         {% for product in products %}
 
-           <tr role="row" >
-            <td><a href="">{{product.id}}</a></td>
-            <td><a href="" style="color: black;text-decoration: none;">{{product.title}}</a></td>
-            <td><a href="" style="color: black;text-decoration: none;"> {{product.price|intcomma:0}} تومان </a></td>
-            <td><a href="" style="color: black;text-decoration: none;">{{product.percent_sod}} %</a></td>
-            <td><a href="" style="color: black;text-decoration: none;"> {{product.price_selling|intcomma:0}} تومان </a></td>
-            <td><a >{{product.sod|intcomma:0}} تومان </a></td>
-            <td><a >{{product.mojodi}} عدد </a></td>
-            <td><a >{{product.is_mojod}} </a></td>
-            <td><a >{{product.created_date}} </a></td>
-            
-            <td>
-                <a style="text-decoration: none;" href="" class="item-delete mlg-15" title="حذف"></a>
-                <a style="text-decoration: none;" href="" target="_blank" class="item-eye mlg-15" title="مشاهده"></a>
-                <a style="text-decoration: none;" href="" class="item-edit " title="ویرایش"></a>
-            </td>
-        </tr>
-           {% endfor %}
-            
+         <tr role="row" >
+          
+          <td><a href="{% url 'product:detail_p' product.id %}">{{product.id}}</a></td>
+          <td><a href="{% url 'product:detail_p' product.id %}" style="color: black;text-decoration: none;">{{product.title}}</a></td>
+          <td><a  style="color: black;text-decoration: none;">{{product.category}}</a></td>
+          <td><a  style="color: black;text-decoration: none;"> {{product.price|intcomma:0}} تومان </a></td>
+          <td><a style="color: black;text-decoration: none;">{{product.percent_sod}} %</a></td>
+          <td><a  style="color: black;text-decoration: none;"> {{product.price_selling|intcomma:0}} تومان </a></td>
+          <td><a >{{product.sod|intcomma:0}} تومان </a></td>
+          <td><a >{{product.mojodi}} عدد </a></td>
+          <td>
+            {% if product.is_mojod == True %}
+            <img
+              style="width: 25px; height: 25px;margin-top: 5px;"
+              src="{% static 'img/true.png' %}"
+            />
 
-            </tbody>
-        </table>
+            {% else %}
+            <img
+              style="width: 25px; height: 25px;margin-top: 5px;"
+              src="{% static 'img/false.png' %}"
+            />
+            {% endif %}
+          </td>
+          <td><a >{{product.created_date}} </a></td>
+          
+          <td>
+             
+              <a style="text-decoration: none;" href="{% url 'product:detail_p' product.id %}"  class="item-eye " title="مشاهده"></a>
+              <a style="text-decoration: none;" href="{% url 'product:detail_p' product.id %}" class="item-edit " title="ویرایش"></a>
+              <a style="text-decoration: none;" href="{% url 'product:delete_p' product.id %}" class="item-delete" title="حذف"></a>
+
+          </td>
+      </tr>
+      
+         {% endfor %}
+          
+
+          </tbody>
+      </table>
+  </div>
+    {% else %}
+    <div class="tab__box" style="display: flex;justify-content: center; align-items: center;background-color: red;padding: 20px 0px;color: white;">
+      هیچ محصولی یافت نشد 
     </div>
+
+
+    {% endif %}
 </div>
 </div>
 
@@ -181,7 +242,7 @@
             <div class="mb-1">
               <label for="message-text" class="col-form-label"> دسته بندی  :</label>
               {% if categories %}
-              <select name="category"  class="form-control">
+              <select name="category" id="cars" class="form-control mb-3">
   {% for cat in categories %}
   <option name="category" value="{{cat.id}}" style="color: black;">{{cat.title}}</option>
   
@@ -207,7 +268,7 @@
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                 بازشگت 
               </button>
-              {% if categorys %}
+              {% if categories %}
               <button type="submit" class="btn btn-primary">افزودن</button>
               {% else %}
               <button type="button" class="btn btn-outline-danger">
@@ -221,6 +282,7 @@
       </div>
     </div>
   </div>
+ 
 
   <script>
     document.querySelector(".dropdown-select").style = "display:none"

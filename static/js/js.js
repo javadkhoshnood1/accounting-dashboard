@@ -37,46 +37,11 @@ $('input:file').change(
 
     });
 
-function create_custom_dropdowns() {
-    $('select').each(function (i, select) {
-        if (!$(this).next().hasClass('dropdown-select')) {
-            $(this).after('<div class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
-            var dropdown = $(this).next();
-            var options = $(select).find('option');
-            var selected = $(this).find('option:selected');
-            dropdown.find('.current').html(selected.data('display-text') || selected.text());
-            options.each(function (j, o) {
-                var display = $(o).data('display-text') || '';
-                dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
-            });
-        }
-    });
 
-    $('.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValue" autocomplete="off" onkeyup="filter()" class="dd-searchbox" type="text"></div>');
-}
 
-$(document).on('click', '.dropdown-select', function (event) {
-    if ($(event.target).hasClass('dd-searchbox')) {
-        return;
-    }
-    $('.dropdown-select').not($(this)).removeClass('open');
-    $(this).toggleClass('open');
-    if ($(this).hasClass('open')) {
-        $(this).find('.option').attr('tabindex', 0);
-        $(this).find('.selected').focus();
-    } else {
-        $(this).find('.option').removeAttr('tabindex');
-        $(this).focus();
-    }
-});
 
-$(document).on('click', function (event) {
-    if ($(event.target).closest('.dropdown-select').length === 0) {
-        $('.dropdown-select').removeClass('open');
-        $('.dropdown-select .option').removeAttr('tabindex');
-    }
-    event.stopPropagation();
-});
+
+
 
 function filter() {
     var valThis = $('#txtSearchValue').val();
