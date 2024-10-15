@@ -61,6 +61,9 @@ td a{
     color: #EEF2F8;
 
 }
+.table-tosi{
+    background-color: #EEF2F8 !important;
+}
 *{
     font-family: tir;
 }

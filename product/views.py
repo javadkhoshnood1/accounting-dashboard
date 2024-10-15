@@ -32,12 +32,16 @@ class ListProductView(TemplateView):
         category = request.POST.get("category")
         catgeory_select = get_object_or_404(categorys,id=category)
         if title and price and percent and category:
-            new_product = Product.objects.create(user=request.user,category=catgeory_select,title=title,price=int(price),percent_sod=int(percent))
-            new_product.price_selling = int(price) + int(price) * int(percent)/100
-            new_product.sod = new_product.price_selling - new_product.price
-            new_product.save()
-            messages.success(request,"محصول جدید شما اضافه شد !")
-            return redirect(f"/product/list/")
+            if Product.objects.filter(user=request.user).filter(title__contains=title):
+                messages.error(request,"این محصول در لیست محصولات  وجود دارد !")
+                return redirect("/product/list/")
+            else:
+                new_product = Product.objects.create(user=request.user,category=catgeory_select,title=title,price=int(price),percent_sod=int(percent))
+                new_product.price_selling = int(price) + int(price) * int(percent)/100
+                new_product.sod = new_product.price_selling - new_product.price
+                new_product.save()
+                messages.success(request,"محصول جدید شما اضافه شد !")
+                return redirect(f"/product/list/")
 
 class CtegoriesView(TemplateView):
     template_name = "product/categories.html"
@@ -84,17 +88,25 @@ class DeleteProductView(View):
 
 class DetailProductView(View):
     def get(self,request,*args,**kwargs):
+        categories = Category.objects.filter(user=request.user).order_by("-created_at")
+
         products = Product.objects.filter(user=request.user)
         product = get_object_or_404(products,id=kwargs["id"])
-        return render(request,"product/detail.html",{"product":product})
+        return render(request,"product/detail.html",{"product":product,"categories":categories})
     
 
     def post(self,request,*args,**kwargs):
+        categories = Category.objects.filter(user=request.user)
+
         products = Product.objects.filter(user=request.user)
         product = get_object_or_404(products,id=request.POST.get("id"))
         title = request.POST.get("title")
         percent_sod = request.POST.get("percent_sod")
         discription = request.POST.get("discription")
+        category = request.POST.get("category")
+        catgeory_select = get_object_or_404(categories,id=category)
+        if category:
+            product.category = catgeory_select
         product.title = title
         product.percent_sod = int(percent_sod)
         product.discription = discription

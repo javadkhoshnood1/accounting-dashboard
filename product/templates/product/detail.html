@@ -65,6 +65,24 @@
                         <input type="text" name="title" class="text" placeholder="نام کاربری" value="{{product.title}}">
 
                     </div>
+                    <div class="col-lg-6">
+
+                        <label for="message-text" class="col-form-label"> دسته بندی  :</label>
+                        {% if categories %}
+                        <select name="category" id="cars" class="form-control mb-3">
+
+            {% for cat in categories %}
+            {% if cat == product.category %}
+            <option selected="{{product.category}}" name="category" value="{{cat.id}}" style="color: black;">{{cat.title}}</option>
+            {% else %}
+            <option  name="category" value="{{cat.id}}" style="color: black;">{{cat.title}}</option>
+                        {% endif %}
+            {% endfor %}
+            </select>
+            {% else %}
+            <p class="bg-danger text-center " style="border-radius: 20px;padding: 5px;">لطفا یک دسته بندی جدید اضافه کنید </p>
+            {% endif %}
+                    </div>
                     <div class="col-lg-6">             
                         <label>قیمت آخرین خرید  (تومان) :  </label>
                         

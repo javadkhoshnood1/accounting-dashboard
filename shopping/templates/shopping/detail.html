@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+جزئیات خرید  من 
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="header d-flex item-center bg-white width-100 border-bottom ">
+        <div class="header__right d-flex flex-grow-1 item-center">
+            <span class="bars"></span>
+                <img style="margin-right: 5px;" width="100" height="45" src="{% static 'img/logo3.png' %}"/>
+                /
+                        <a style="text-decoration: none;" href="{% url 'home:index' %}" title="پیشخوان">پیشخوان</a>/
+                        <a style="text-decoration: none;" href="{% url 'shopping:list_shop' %}" title="پیشخوان">لیست خرید های من  </a>/
+                        <a style="text-decoration: none;" href="{% url 'shopping:detail_shop' invoice.id %}" title="پیشخوان">{{invoice.name_company}}</a>
+        </div>
+        <div class="header__left d-flex flex-end item-center margin-top-2">
+            <div class="notification" style="margin-left: 8px;">
+                <img width="33" height="33" src="{% static 'img/user2.png' %}"/>
+                <div class="dropdown__notification">
+                    <div class="content__notification">
+                        <span class="font-size-13">موردی برای نمایش وجود ندارد</span>
+                    </div>
+                </div>
+            </div>
+            <a
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#logout"
+            data-bs-whatever="@mdo">
+                <img width="35" height="35" src="{% static 'img/logout2.png' %}"/>
+        </a>
+        </div>
+
+
+    </div>
+
+
+    <div id="invoice-shop" class="main-content" style="background-color: #dcdcdc;">
+        <div class="tab__box" style="padding: 20px 20px;">
+            
+            <div class="d-flex justify-content-center align-items-center">
+                <p style="color: #2B4A83;font-family: avini;font-size: 22px;">فاکتور خرید </p>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 d-flex justify-content-center align-items-center">نام شرکت :{{invoice.name_company}} / {{invoice.phone_company}}</div>
+                <div class="col-lg-4 col-md-4 d-flex justify-content-center align-items-center">نام فروشگاه :{{request.user.name_shop}}</div>
+                <div class="col-lg-4 col-md-4 d-flex justify-content-center align-items-center">{{invoice.created_date}}</div>
+                
+            </div>
+            <div class="container mt-4">
+                <table id="myTable" class="table table-bordered table-hover table-secondary">
+                    <thead>
+                        <tr>
+                            <th>شماره</th>
+                            <th>نام محصول </th>
+                            <th>قیمت (تومان)</th>
+                            <th>تعداد </th>
+                            <th>قیمت کل </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for product in invoice.product.all %}
+
+                    <tr>
+                        <td>{{product.id}}</td>
+                        <td>{{product.product.title}}</td>
+                        <td>{{product.price|intcomma:0}}تومان </td>
+                        <td>{{product.tedad}}عدد</td>
+                        <td>{{product.price_kol|intcomma:0}}تومان </td>
+                    </tr>
+
+                    {% endfor%}
+                    </tbody>
+                    
+                </table>
+                <div class="row d-flex justify-content-end  ">
+                    <div class="col-2 p-2 d-flex justify-content-center  bg-secondary" style="color: white;">قیمت کل  : </div>
+                    <div class="col-3 d-flex justify-content-center p-2 bg-secondary " style="color: white;">
+                        <p style="color: black;"> {{invoice.price_nahayi|intcomma:0}}تومان</p>                        
+    
+                    </div>
+                </div>
+                
+                <div class="row d-flex justify-content-end ">
+                    <div class="col-2 p-2 d-flex justify-content-center  bg-secondary" style="color: white;">تخفیف : </div>
+                    <div class="col-3 d-flex justify-content-center p-2 bg-secondary " style="color: white;">
+                    <p style="color: black;"> {{invoice.off}} درصد</p>                        
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-end  ">
+                    <div class="col-2 p-2 d-flex justify-content-center  bg-secondary" style="color: white;">کرایه  : </div>
+                    <div class="col-3 d-flex justify-content-center p-2 bg-secondary " style="color: white;">
+                        <p style="color: black;"> {{invoice.keriyeh|intcomma:0}}تومان</p>                        
+    
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-end  ">
+                    <div class="col-lg-7">
+                        <button onclick="window.print()" class=" btn-sm btn-tosi">
+                            چاپ فاکتور
+                        </button>
+                    </div>
+                    <div class="col-2 p-2 d-flex justify-content-center  bg-secondary" style="color: white;">جمع نهایی : </div>
+                    <div class="col-3 d-flex justify-content-center p-2 bg-secondary " style="color: white;">
+                        <p style="color: black;"> {{invoice.last_price|intcomma:0}}تومان</p>                        
+    
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
+
+        
+    {% endblock %}

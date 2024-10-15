@@ -35,7 +35,7 @@ class Product(models.Model):
     sod = models.BigIntegerField(default=0)
     discription = models.TextField(max_length=300, null=True, blank=True, verbose_name="توضیحات مدیر")
     created_at = models.DateField(auto_now_add=True, blank=True, null=True, verbose_name="تاریخ افزودن محصول")
-    category = models.ForeignKey(Category,null=True,blank=True,on_delete=models.CASCADE, verbose_name="دسته بندی ها ")
+    category = models.ForeignKey(Category,null=True,blank=True,on_delete=models.SET_NULL, verbose_name="دسته بندی ها ")
 
 
     class Meta:
@@ -56,24 +56,3 @@ class Product(models.Model):
 
 
 
-# class AvailableProduct(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-#     mojodi = models.PositiveBigIntegerField(default=0,verbose_name="موجودی")
-#     company = models.CharField(max_length=255,verbose_name="شرکت خرید")
-#     status = models.BooleanField(default=True)
-#     discription = models.TextField(max_length=300, null=True, blank=True, verbose_name="توضیحات مدیر")
-#     created_at = models.DateField(auto_now_add=True, blank=True, null=True, verbose_name="تاریخ افزودن محصول")
-#     price = models.BigIntegerField(default=0, null=True, blank=True, verbose_name="قیمت خرید")
-#     price_kol = models.BigIntegerField(default=0, null=True, blank=True)
-#     off = models.IntegerField(default=0, null=True, blank=True, verbose_name="تخفیف  شرکت ")
-
-
-#     class Meta:
-#         verbose_name = "خرید  محصول"
-#         verbose_name_plural = "خرید  محصولات  "
-
-    
-
-#     def Created_at(self):
-#         return date2jalali(self.created_at)

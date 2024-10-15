@@ -34,7 +34,7 @@
         </div>
     </div>
 
-<div class="main-content" style="background-color: #dcdcdc;height: 530px;">
+<div class="main-content" style="background-color: #dcdcdc;">
     <div class="tab__box" style="display: flex; justify-content: space-between;padding: 0px 10px;">
         <div class="tab__items">
           {% if available %}
@@ -90,6 +90,9 @@
                         <input type="text" required  class=" text search_p"  name="search_p"  placeholder="نام محصول">
 
                         {% endif %}
+                        
+                  
+
                         <button type="submit" class="btn btn-netcopy_net">جستجو</button>
                       </div>
                      {% if search_p %}
@@ -104,6 +107,7 @@
                      {% endif %}
                 </div>
             </form>
+            
         </div>
     </div>
     {% if products %}
