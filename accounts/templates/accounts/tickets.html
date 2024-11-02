@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+لیست تیکت های  من 
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="header d-flex item-center bg-white width-100 border-bottom ">
+        <div class="header__right d-flex flex-grow-1 item-center">
+            <span class="bars"></span>
+                <img style="margin-right: 5px;" width="100" height="45" src="{% static 'img/logo3.png' %}"/>
+                /
+                        <a style="text-decoration: none;" href="{% url 'home:index' %}" title="پیشخوان">پیشخوان</a>/
+                        <a style="text-decoration: none;" href="{% url 'accounts:tickets' %}" title="پیشخوان">لیست تیکت های من  </a>
+        </div>
+        <div class="header__left d-flex flex-end item-center margin-top-2">
+            <div class="notification" style="margin-left: 8px;">
+                <div class="dropdown__notification">
+                    <div class="content__notification">
+                        <span class="font-size-13">موردی برای نمایش وجود ندارد</span>
+                    </div>
+                </div>
+            </div>
+            <a
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#logout"
+            data-bs-whatever="@mdo">
+                <img width="35" height="35" src="{% static 'img/logout2.png' %}"/>
+        </a>
+        </div>
+    </div>
+
+    <div class="main-content padding-0 categories" style="background-color: #dcdcdc;height: 720px;">
+        <div class="row no-gutters  ">
+            <div class="col-8 margin-left-10 margin-bottom-15 border-radius-3">
+                <p class="box__title">تیکت های ارسالی شما </p>
+                {% if tickets %}
+                <div class="table__box">
+
+                    <table class="table">
+                        <thead role="rowgroup">
+                        <tr role="row" class="title-row">
+                            <th>شناسه</th>
+                            <th>عنوان </th>
+                            <th>توضیحات </th>
+                            <th>وضعیت پاسخ </th>
+
+                            <th>عملیات</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in tickets %}
+
+
+                            <tr role="row" class="">
+                                <td><a class="text-black text-decoration-none" href="{% url 'accounts:ticket-detail' i.id %}">{{i.id}}</a></td>
+                                <td><a class="text-black text-decoration-none" href="{% url 'accounts:ticket-detail' i.id %}">{{i.title}}</a></td>
+                                <td><a>{{i.discription}}</a></td>
+                                <td>
+                                    {% if i.status %}
+                                    <img
+                                      style="width: 25px; height: 25px;margin-top: 5px;"
+                                      src="{% static 'img/true.png' %}"
+                                    />
+                        
+                                    {% else %}
+                                    <img
+                                      style="width: 25px; height: 25px;margin-top: 5px;"
+                                      src="{% static 'img/false.png' %}"
+                                    />
+                                    {% endif %}
+                                  </td> 
+                                 
+                                  <td>
+                                    <a style="text-decoration: none;"  class="item-eye " href="{% url 'accounts:ticket-detail' i.id %}" title="مشاهده"></a>
+                                </td>
+                            </tr>
+                            
+                            {% endfor %}
+
+                          
+
+                       
+
+                        </tbody>
+                    </table>
+                </div>
+
+                    {% else %}
+                    <div class="tab__box" style="display: flex;justify-content: center; align-items: center;background-color: red;padding: 20px 0px;color: white;">
+                        شما هیچ تیکتی ارسال نکرده اید 
+                      </div>
+                    {% endif %}
+
+            </div>
+            <div class="col-lg-3 bg-white">
+                  <p class="box__title">ایجاد تیکت  جدید</p>
+                  <form  method="post" class="padding-30">
+                    {% csrf_token %}
+                      <input name="title" type="text" placeholder="عنوان تیکت " class="text">
+                      <input name="discription" style="height: 100px;" type="text" placeholder="توضیح بیشتر " class="text">
+                     
+                      <button type="submit" class="btn btn-netcopy_net">ارسال تیکت </button>
+                  </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

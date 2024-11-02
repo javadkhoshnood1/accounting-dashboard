@@ -18,7 +18,6 @@
         </div>
         <div class="header__left d-flex flex-end item-center margin-top-2">
             <div class="notification" style="margin-left: 8px;">
-                <img width="33" height="33" src="{% static 'img/user2.png' %}"/>
                 <div class="dropdown__notification">
                     <div class="content__notification">
                         <span class="font-size-13">موردی برای نمایش وجود ندارد</span>
@@ -45,7 +44,25 @@
                     </div>
                     
                 
-                    <div class="col-lg-6 d-flex justify-content-end align-items-end">
+                    <div class="col-lg-6 d-flex justify-content-end align-items-end gap-2">
+                        <a
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#pay_price"
+                        data-bs-whatever="@mdo"
+                        class="btn btn-sm btn-outline-success">
+                            پرداخت حساب  
+
+                        </a>
+                        <a
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#list_pay_price"
+                        data-bs-whatever="@mdo"
+                        class="btn btn-sm btn-primary">
+                            لیست پرداخت شده ها  
+
+                        </a>
                         <a
                         type="button"
                         data-bs-toggle="modal"
@@ -143,6 +160,113 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="pay_price">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" id="modal-login">
+        <div class="modal-header" >
+          <h5 class="modal-title" id="exampleModalLabel" style="font-size: 28px;">فرم پرداخت حساب   مشتری  به فروشگاه </h5>
+            <button
+            type="button"
+            style="background-color: red;margin: 0 auto;"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+           <form method="post">
+            {% csrf_token %}
+            <input type="text" name="id" value="{{customer.id}}"  class="form-control" id="recipient-name" style="display: none;"/>
+
+            <div class="mb-3">
+                <label for="recipient-name" class="col-form-label"
+                  > باقی مانده حساب  :</label
+                >
+                <input class="text " type="text" name="sod" disabled value="{{customer.price_mandeh|intcomma:0}} تومان">
+
+              </div>
+
+
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label"
+                  > مبلغ پرداختی  :</label
+                >
+                <input type="text" name="pay_price" value="0"  class="form-control" id="recipient-name" />
+              </div>
+              <div class="d-flex justify-content-end align-items-end">
+                <button type="submit" class="btn btn-outline-success mt-2">
+                    پرداخت 
+    
+                  </button>
+              </div>
+
+           </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="list_pay_price">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content" id="modal-login">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" style="font-size: 28px">
+      لیست پرداختی های  {{payments.customer.fullname}} برای فروشگاه {{request.user.name_shop}}
+          </h5>
+          <button
+            type="button"
+            style="background-color: red; margin: 0 auto"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            
+           {% if payments %}
+            <table
+              class="table table-hover table-primary  table-responsive-xxl table-responsive-xl table-responsive-sm"
+            >
+              <thead>
+                <tr>
+                    <th>شناسه</th>
+                    <th>نام و نام خانوادگی </th>
+                    <th>شماره تماس</th>
+                    <th> مبلغ پرداخت شده  </th>
+                    <th>تاریخ ایجاد  </th>
+                </tr>
+              </thead>
+  
+              <tbody>
+                {% for payment in payments %}
+                <tr >
+                    <td><a>{{customer.id}}</a></td>
+                    <td><a style="color: black;text-decoration: none;">{{customer.fullname}}</a></td>
+                    <td><a  style="color: black;text-decoration: none;">{{customer.phone}}</a></td>
+                    <td><a  style="color: black;text-decoration: none;"> {{payment.price_paid|intcomma:0}} تومان </a></td>
+      
+                    
+                    <td><a >{{payment.created_data}} </a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            {% else %}
+  
+            <div class="bg-danger p-5" style="border-radius: 20px">
+              <h3 class="text-center">
+                هیچ پرداختی   نداشته است 
+              </h3>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 
 {% endblock %}

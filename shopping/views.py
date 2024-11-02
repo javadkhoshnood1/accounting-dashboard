@@ -65,7 +65,11 @@ class NewShopView(View):
 class listShopView(View):
     def get(self,request):
         invoiceshops = InvoiceShop.objects.filter(user=request.user)
-        return render(request,"shopping/list.html",{"invoiceshops":invoiceshops})
+        search_invoice = request.GET.get("search_invoice")
+        if search_invoice:
+            invoiceshops = InvoiceShop.objects.filter(user=request.user).filter(name_company__contains=search_invoice)
+
+        return render(request,"shopping/list.html",{"invoiceshops":invoiceshops,"search_invoice":search_invoice})
     
 
 class DetailShopView(View):

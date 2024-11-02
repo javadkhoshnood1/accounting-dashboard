@@ -2,7 +2,7 @@
 {% load static %}
 {% load humanize %}
 {% block title %}
-لیست خرید های من 
+لیست فروش های  من 
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,7 @@
                 <img style="margin-right: 5px;" width="100" height="45" src="{% static 'img/logo3.png' %}"/>
                 /
                         <a style="text-decoration: none;" href="{% url 'home:index' %}" title="پیشخوان">پیشخوان</a>/
-                        <a style="text-decoration: none;" href="{% url 'shopping:list_shop' %}" title="پیشخوان">لیست خرید های من  </a>
+                        <a style="text-decoration: none;" href="{% url 'sale:list_sale' %}" title="پیشخوان">لیست فروش  های من  </a>
         </div>
         <div class="header__left d-flex flex-end item-center margin-top-2">
             <div class="notification" style="margin-left: 8px;">
@@ -36,13 +36,15 @@
 <div class="main-content" style="background-color: #dcdcdc">
     <div class="tab__box" style="display: flex; justify-content: space-between;padding: 0px 10px;">
         <div class="tab__items">
-        
+          
+            
+          
             <p class="d-inline-block font-size-13" style="color: gray;">
-              {{invoiceshops.count}} عدد فاکتور برای شما یافت شد 
+              {{invoicesale.count}} عدد فاکتور برای شما یافت شد 
            </p>
         </div>
         <div class="tab__items">
-            <a class="btn-tosi text-white text-decoration-none" href="{% url 'shopping:new_shop' %}"
+            <a class="btn-tosi text-white text-decoration-none" href="{% url 'sale:new_sale' %}"
             
            >ایجاد فاکتور جدید </a>
 
@@ -57,21 +59,21 @@
                 <div class="t-header-searchbox font-size-13">
                     <div type="text" class="text search-input__box ">جستجوی فاکتور ها  </div>
                     <div class="t-header-search-content  ">
-                      <label> اسم شرکت  :</label>
-                      {% if search_invoice %}
+                      <label> اسم مشتری  :</label>
+                      {% if search_c %}
 
-                        <input type="text" required  class=" text search_invoice" value="{{search_invoice}}" name="search_invoice"  placeholder="نام شرکت">
+                        <input type="text" required  class=" text search_c" value="{{search_c}}" name="search_c"  placeholder="نام مشتری">
                         {% else %}
-                        <input type="text" required  class=" text search_invoice"  name="search_invoice"  placeholder="نام محصول">
+                        <input type="text" required  class=" text search_c"  name="search_c"  placeholder="نام مشتری">
 
                         {% endif %}
                         <button type="submit" class="btn btn-netcopy_net">جستجو</button>
                       </div>
-                     {% if search_invoice %}
+                     {% if search_c %}
                      <p class="d-inline-block font-size-13" style="color: gray;">
-                      جستجوی : {{search_invoice}}
+                      جستجوی : {{search_c}}
                       /
-                      <a class="text-danger" href="{% url 'shopping:list_shop' %}">لفو جستجو </a>
+                      <a class="text-danger" href="{% url 'sale:list_sale' %}">لفو جستجو </a>
 
                     </p>
                      {% else %}
@@ -81,7 +83,7 @@
             </form>
         </div>
     </div>
-    {% if invoiceshops %}
+    {% if invoicesale %}
 
 
     <div class="table__box">
@@ -90,27 +92,25 @@
           <thead role="rowgroup">
           <tr role="row" class="title-row ">
               <th>شناسه</th>
-              <th>شرکت</th>
+              <th>نام مشتری </th>
               <th>قیمت کل محصولات </th>
               <th>تخفیف</th>
-              <th>کرایه </th>
               <th >قیمت نهایی </th>
               <th>تعداد محصولات </th>
-              <th>تاریخ خرید  </th>
+              <th>تاریخ فروش  </th>
               
               <th>عملیات</th>
           </tr>
           </thead>
           <tbody>
-         {% for item in invoiceshops %}
+         {% for item in invoicesale %}
 
          <tr role="row" >
           
-          <td><a href="{% url 'shopping:detail_shop' item.id %}">{{item.id}}</a></td>
-          <td><a href="{% url 'shopping:detail_shop' item.id %}" style="color: black;text-decoration: none;">{{item.name_company}}</a></td>
+          <td><a href="{% url 'sale:detail_sale' item.id %}">{{item.id}}</a></td>
+          <td><a  href="{% url 'sale:detail_sale' item.id %}" style="color: black;text-decoration: none;">{{item.customer.fullname}}</a></td>
           <td><a style="color: black;text-decoration: none;">{{item.price_nahayi|intcomma:0}}تومان </a></td>
           <td><a  style="color: black;text-decoration: none;">{{item.off}}%</a></td>
-          <td><a  style="color: black;text-decoration: none;"> {{item.keriyeh|intcomma:0}}تومان </a></td>
           <td><a style="color: black;text-decoration: none;">{{item.last_price|intcomma:0}}تومان </a></td>
           <td><a >{{item.product.count}}   عدد محصول </a></td>
           
@@ -118,8 +118,9 @@
           
           <td>
              
-              <a href="{% url 'shopping:detail_shop' item.id %}" style="text-decoration: none;"   class="item-eye " title="مشاهده"></a>
-              <a href="{% url 'shopping:detail_shop' item.id %}" style="text-decoration: none;"  class="item-edit " title="ویرایش"></a>
+              <a style="text-decoration: none;"   class="item-eye " title="مشاهده"></a>
+              <a style="text-decoration: none;"  class="item-edit " title="ویرایش"></a>
+              <a style="text-decoration: none;"  class="item-delete" title="حذف"></a>
 
           </td>
       </tr>

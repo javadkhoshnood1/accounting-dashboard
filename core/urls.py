@@ -28,7 +28,8 @@ urlpatterns = [
     path("product/",include("product.urls")),
     path("customer/",include("customer.urls")),
     path("shopping/",include("shopping.urls")),
-
+    path("about/",include("about.urls")),
+    path("sale/",include("sale.urls")),
 ]+ static(MEDIA_URL, document_root=MEDIA_ROOT)
 
 

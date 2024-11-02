@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
-from jalali_date import datetime2jalali
+from jalali_date import datetime2jalali,date2jalali
 
 
 class MyUserManager(BaseUserManager):
@@ -84,5 +84,25 @@ class OTP(models.Model):
     class Meta:
         verbose_name = "otp"
         verbose_name_plural = "opts"
-        
+
+
+from product.models import Product
+from customer.models import Customer
+
+
+class Ticket(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    discription = models.TextField(max_length=300, null=True, blank=True, verbose_name="توضیحات مدیر")
+    status = models.BooleanField(default=False)
+    awnser = models.TextField(null=True,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True, verbose_name="تاریخ اضافه شدن")
+
+    def created_data(self):
+        return date2jalali(self.created_at)
     
+    class Meta:
+        verbose_name = "تیکت "
+        verbose_name_plural = "تیکت ها"
+
+

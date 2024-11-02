@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+اطلاعات کاربری من 
+{% endblock %}
+{% block content %}
+<div class="content">
+    <div class="header d-flex item-center bg-white width-100 border-bottom ">
+        <div class="header__right d-flex flex-grow-1 item-center">
+            <span class="bars"></span>
+                <img style="margin-right: 5px;" width="100" height="45" src="{% static 'img/logo3.png' %}"/>
+                /
+                        <a style="text-decoration: none;" href="{% url 'home:index' %}" title="پیشخوان">پیشخوان</a>/
+                        <a style="text-decoration: none;" href="{% url 'accounts:edit-profile' %}" title="پیشخوان">اطلاعات کاربری من </a>/
+        </div>
+        <div class="header__left d-flex flex-end item-center margin-top-2">
+            <div class="notification" style="margin-left: 8px;">
+                <div class="dropdown__notification">
+                    <div class="content__notification">
+                        <span class="font-size-13">موردی برای نمایش وجود ندارد</span>
+                    </div>
+                </div>
+            </div>
+            <a
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#logout"
+            data-bs-whatever="@mdo">
+                <img width="35" height="35" src="{% static 'img/logout2.png' %}"/>
+        </a>
+        </div>
+    </div>
+
+    <div class="main-content" style="background-color: #dcdcdc;">
+        <div class="user-info bg-white padding-30 font-size-13">
+            <form method="post">
+                {% csrf_token %}
+                <div class="row mb-4">
+                    <div class="col-lg-6" style="font-size: 15px;">
+                        ویرایش اطلاعات کاربری  : <span style="color: #2B4A83;font-family: avini;font-size: 22px;">{{request.user.name_shop}}</span>
+                    </div>
+                    
+                
+                    <div class="col-lg-6 d-flex justify-content-end align-items-end gap-2">
+                        <a
+                      href="{% url 'accounts:dashboard' %}"
+                        class=" text-decoration-none btn-outline-tosi">
+                            جزئیات فروشگاه من   
+
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+
+                        <label>نام و نام خانوادگی  : </label>
+                        <input type="text" name="fullname" class="text" placeholder="نام کاربری" value="{{request.user.fullname}}">
+
+                    </div>
+                    <div class="col-lg-6">
+
+                        <label>شماره تماس  : </label>
+                        <input type="text" disabled name="phone" class="text" placeholder="شماره تماس" value="{{request.user.phone}}">
+
+                    </div>
+                    <div class="col-lg-6">             
+
+                        <label>نام فروشگاه  : </label>
+                        <input type="text" name="name_shop" class="text" placeholder="نام فروشگاه" value="{{request.user.name_shop}}">                        
+                    </div>
+                   
+                    <div class="col-lg-6">
+
+                        <label>ایمیل   : </label>
+                        <input type="email" name="email" class="text" placeholder="نام کاربری" value="{{request.user.email}}">
+
+
+                    </div>
+                   
+                    
+                
+                </div>
+                
+               
+                <br>
+                <label>
+                    توضیحات :
+                </label>
+                <input  name="discription" class="text" value="{{request.user.discription}}"  />
+                <br/>
+                <div class="row">
+                   <div class="container">
+                    <div class="alert alert-danger">
+                        توجه داشته باشید در صورت تغییر رمز عبور یا پر کردن فیلد های زیر  از حساب کاربری خود خارج میشوید و باید با رمز عبور جدیدی که ساخته اید وارد حساب خود شوید 
+                    </div>
+                   </div>
+                    <div class="col-6">
+
+                        
+                        <label> رمز عبور جدید    : </label>
+                        <input minlength="5" type="text" name="password1" class="text" placeholder="رمز عبور " >
+                    </div>
+                    <div class="col-6">
+
+                        
+                        <label> تکرار رمز عبور جدید : </label>
+                        <input minlength="5" type="text" name="password2" class="text" placeholder="تکرار رمز عبور جدید " >
+                    </div>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-netcopy_net">ذخیره تغییرات</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+ 
+
+ 
+
+</body>
+
+{% endblock %}

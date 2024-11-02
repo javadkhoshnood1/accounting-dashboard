@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.views import View
 from django.views.generic import TemplateView,DetailView
 # Create your views here.
-from .models import Customer
+from .models import Customer,Payments
 from django.contrib import messages
 class ListCustomerView(View):
     def get(slf,request):
@@ -40,18 +40,42 @@ class DetailCustomerView(View):
     def get(self,request,*args,**kwargs):
         customers = Customer.objects.filter(user=request.user)
         customer = get_object_or_404(customers,id=kwargs["id"])
-        return render(request,"customer/detail.html",{"customer":customer})
+        payments = Payments.objects.filter(user=request.user,customer=customer)
+        return render(request,"customer/detail.html",{"customer":customer,"payments":payments})
     
-
+    
     def post(self,request,*args,**kwargs):
+        pay_price = request.POST.get("pay_price")
+        id = request.POST.get("id")
         customers = Customer.objects.filter(user=request.user)
         customer = get_object_or_404(customers,id=kwargs["id"])       
         fullname = request.POST.get("fullname")
         phone = request.POST.get("phone")
         discription = request.POST.get("discription")
-        customer.fullname = fullname
-        customer.phone = phone
-        customer.discription = discription
+        if fullname and phone:
+            customer.fullname = fullname
+            customer.phone = phone
+            customer.discription = discription
+
+        if pay_price:
+            if int(pay_price) == 0:
+                messages.error(request,"مبلغ پرداختی شما 0 تومان است !!")
+                return redirect(f"/customer/detail/{int(id)}")
+            elif int(pay_price) > customer.price_mandeh:
+                messages.error(request,f"مبلغ پرداختی باید کمتر از {customer.price_mandeh} باشد . ")
+                return redirect(f"/customer/detail/{int(id)}")
+            elif int(pay_price) <= customer.price_mandeh:
+                new_payments = Payments.objects.create(user=request.user,customer=customer)
+                new_payments.price_paid = int(pay_price)
+                new_payments.save()
+                customer.price_mandeh -= new_payments.price_paid
+                customer.price_paid_all += new_payments.price_paid
+                if customer.price_mandeh == 0:
+                    customer.is_paid = True
+                new_payments.save()
+                customer.save()
+                messages.success(request,f"مبلغ {pay_price} برای مشتری {customer.fullname} پرداخت شد ")
+                return redirect(f"/customer/detail/{int(id)}")
         customer.save()
         messages.success(request,f"مشتری {customer.fullname} ویرایش شد  ")
         return redirect("/customer/list/")

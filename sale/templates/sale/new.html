@@ -2,7 +2,7 @@
 {% load static %}
 {% load humanize %}
 {% block title %}
-ثبت بار جدید / خرید محصول 
+ثبت فروش جدید / فروش محصول به مشتری  
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,7 @@
                 <img style="margin-right: 5px;" width="100" height="45" src="{% static 'img/logo3.png' %}"/>
                 /
                         <a style="text-decoration: none;" href="{% url 'home:index' %}" title="پیشخوان">پیشخوان</a>/
-                        <a style="text-decoration: none;" href="{% url 'shopping:new_shop' %}" >خرید محصول (ثبت بار جدید)</a>
+                        <a style="text-decoration: none;" href="{% url 'sale:new_sale' %}" >فروش محصول (ثبت فروش جدید به مشتری )</a>
         </div>
         <div class="header__left d-flex flex-end item-center margin-top-2">
             <div class="notification" style="margin-left: 8px;">
@@ -40,21 +40,26 @@
           <div class="row">
             <div class="col-lg-12 ">
               <h3 style="font-family: avini;" class="text-center">{{request.user.name_shop}}</h3>
-              <h4 style="font-family: avini;color: #2B4A83;" class="text-center">فاکتور خرید </h4>
+              <h4 style="font-family: avini;color: #2B4A83;" class="text-center">فاکتور فروش </h4>
             </div>
           </div>
             <div class="row">
                 <div class="col-lg-4">
-                    <label>نام شرکت :</label>
-                    <input required class="text" name="name_shekat" />
+                    <label>نام مشتری  :</label> <br/>
+                    <button id="btn_select_customer" type="button" data-bs-toggle="modal" data-bs-target="#customers" data-bs-whatever="@mdo" class="btn-sm btn-tosi mb-2">انتخاب مشتری  از مشتریان </button>
+                    <button id="btn_new_customer" type="button" onclick="create_customer()" class="btn-sm btn-tosi btn-outline-tosi mb-2">مشتری  جدید </button>    
+                    <input  id="name_customer" class="text" name="name_customer" value=""  style="display: none;"  />
+                    <input  id="get_customer" class="text" name="get_customer" value=""  style="display: none;"  />
+
+                
                 </div>
                 <div class="col-lg-4">
-                    <label> شماره تماس شرکت  :</label>
-                    <input required class="text" name="phone"   />
+                    <label> شماره تماس مشتری  :</label>
+                    <input required id="phone_customer" class="text" name="phone_customer"  value=""  />
                 </div>
                 <div class="col-lg-4">
-                    <label>تاریخ خرید   :</label>
-                    <input  class="text" name="name_shekat" disabled id="date-roz" />
+                    <label>تاریخ فروش   :</label>
+                    <input  class="text"  disabled id="date-roz" />
                 </div>
 
 
@@ -65,7 +70,6 @@
 <div class="container">
         <div class="tab__box p-3">
             <button type="button" data-bs-toggle="modal" data-bs-target="#products" data-bs-whatever="@mdo" class="btn-sm btn-tosi mb-2">انتخاب محصول از محصولات</button>
-            <button type="button" onclick="create_row()" class="btn-sm btn-tosi mb-2">محصول جدید </button>
             <table id="myTable" class="table table-bordered table-hover table-secondary">
                 <thead>
                     <tr>
@@ -82,19 +86,14 @@
                
             </div>
             <div class="row d-flex justify-content-end mb-2 ">
-                <div class="col-2 p-2 d-flex justify-content-center rounded-2 bg-secondary text-white">تخفیف : </div>
+                <div class="col-2 p-2 d-flex justify-content-center rounded-2 bg-secondary text-white">تخفیف                 (تومان)
+                    : </div>
                 <div class="col-3 d-flex justify-content-center p-2  " style="color: #2B4A83;">
                     
                     <input value=0  class="form-control" type="number" name="discount" style="height: 30px;"/>
                 </div>
             </div>
-            <div class="row d-flex justify-content-end mb-2 ">
-                <div class="col-2 p-2 d-flex justify-content-center rounded-2 bg-secondary text-white">کرایه حمل و نقل : </div>
-                <div class="col-3 d-flex justify-content-center p-2  " style="color: #2B4A83;">
-                    <input value=0 class="form-control" type="number" name="kerayeh" style="height: 30px;"/>
-
-                </div>
-            </div>
+            
 
             <div class="row d-flex justify-content-end mb-2 ">
                 <div class="col-3 d-flex justify-content-center p-2 text-white  ">
@@ -146,7 +145,7 @@
       
                   <tbody>
                     {% for product in products %}
-                    <tr style="cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"  onclick="select_product('{{product.title}}')">
+                    <tr style="cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"  onclick="select_product('{{product.title}}','{{product.price_selling}}')">
                         <td><a >{{product.id}}</a></td>
                         <td><a  style="color: black;text-decoration: none;">{{product.title}}</a></td>
                         <td><a  style="color: black;text-decoration: none;">{{product.category}}</a></td>
@@ -186,7 +185,85 @@
           </div>
         </div>
       </div>
+      <div class="modal fade" id="customers">
+        <div class="modal-dialog modal-fullscreen">
+          <div class="modal-content" id="modal-login">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel" style="font-size: 28px">
+          لیست مشتریان {{request.user.name_shop}}
+              </h5>
+              <button
+                type="button"
+                style="background-color: red; margin: 0 auto"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="container">
+                
+               {% if customers %}
+                <p class="text-warning"> بر روی اسم  یکی از مشتریان  کلیک کنید تا آن مشتری انتخاب شود  </p>
+                <table
+                  class="table table-hover table-primary  table-responsive-xxl table-responsive-xl table-responsive-sm"
+                >
+                  <thead>
+                    <tr>
+                        <th>شناسه</th>
+                        <th>نام و نام خانوادگی </th>
+                        <th>شماره تماس</th>
+                        <th>کل حساب</th>
+                        <th>پرداخت شده ها </th>
+                        <th >مانده حساب</th>
       
+                        <th>وضعیت </th>
+                        <th>تاریخ ایجاد  </th>
+                    </tr>
+                  </thead>
+      
+                  <tbody>
+                    {% for customer in customers %}
+                    <tr style="cursor: pointer;" data-bs-dismiss="modal" aria-label="Close"  onclick="select_customer('{{customer.fullname}}','{{customer.phone}}')">
+                        <td><a>{{customer.id}}</a></td>
+                        <td><a style="color: black;text-decoration: none;">{{customer.fullname}}</a></td>
+                        <td><a  style="color: black;text-decoration: none;">{{customer.phone}}</a></td>
+                        <td><a  style="color: black;text-decoration: none;"> {{customer.price|intcomma:0}} تومان </a></td>
+                        <td><a  style="color: black;text-decoration: none;"> {{customer.price_paid_all|intcomma:0}} تومان </a></td>
+                        <td><a  style="color: black;text-decoration: none;"> {{customer.price_mandeh|intcomma:0}} تومان </a></td>
+          
+                        <td>
+                          {% if customer.is_paid == True %}
+                          <img
+                            style="width: 25px; height: 25px;margin-top: 5px;"
+                            src="{% static 'img/true.png' %}"
+                          />
+              
+                          {% else %}
+                          <img
+                            style="width: 25px; height: 25px;margin-top: 5px;"
+                            src="{% static 'img/false.png' %}"
+                          />
+                          {% endif %}
+                        </td>
+                        <td><a >{{customer.created_date}} </a></td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                {% else %}
+      
+                <div class="bg-danger p-5" style="border-radius: 20px">
+                  <h3 class="text-center">
+                    هیچ مشتری  ندارید
+                  </h3>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
 <script>
     const date = new Date()
@@ -201,29 +278,19 @@ console.log(date.toDateString("fa-IR", option))
 document.getElementById("date-roz").value = date.toLocaleDateString("fa-IR", option)
 
 
-var number = 1
-
-function create_row() {
-    var table = document.getElementById("myTable");
-  var row = table.insertRow(number);
-  row.id = number
-  var cell1 = row.insertCell(0);
-  var cell2 = row.insertCell(1);
-  var cell3 = row.insertCell(2);
-  var cell4 = row.insertCell(3);
-  var cell5 = row.insertCell(4);
-  cell2.innerHTML = `<input required name='name' id="name-${number}" class='form-control' type='text' style='width:200px;' />` 
-  
-  cell3.innerHTML = `<input required name='price' id="price-${number}" class='form-control' type='text' style='width:200px;' /> `;
-  cell4.innerHTML = `<input required name='tedad' id="tedad-${number}"  oninput="price_kol(${number})" class='form-control' type='text' style='width:200px;' />`;
-  cell1.innerHTML =number ;
-  cell5.id= `pricekol-${number}`
-  cell5.className= `pricekol`
-  cell5.innerText = `0`;
-  number += 1
+function create_customer() {
+    btn_new_customer =document.getElementById("btn_new_customer");
+    btn_select_customer  =document.getElementById("btn_select_customer");  
+    name_customer  =document.getElementById("name_customer");  
+    btn_new_customer.style.display = "none"
+    btn_select_customer.style.display = "none"
+    name_customer.style.display = "flex"
 }
 
-function select_product(id){
+var number = 1
+
+
+function select_product(id,price_selling){
 var table = document.getElementById("myTable");
   var row = table.insertRow(number);
   row.id = number
@@ -234,14 +301,14 @@ var table = document.getElementById("myTable");
   var cell5 = row.insertCell(4);
   console.log(id);
   
-  cell3.innerHTML = `<input required name='price' id="price-${number}" class='form-control' type='text' style='width:200px;' /> <input required  name='name' value='${id}' class='form-control d-none'   /> `;
-  cell2.innerHTML = `${id}` 
+  cell3.innerHTML = `${price_selling}`;
+  cell3.id = "price_selling"
+  cell2.innerHTML =  `<input type='text'  required  class='form-control' name='names_product' value="${id}" />` 
 
   cell4.innerHTML = `<input required name='tedad' id="tedad-${number}"  oninput="price_kol(${number})" class='form-control' type='text' style='width:200px;' />`;
   cell1.innerHTML =number ;
   cell5.id= `pricekol-${number}`
   cell5.className= `pricekol`
-
   cell5.innerText = `0`;
   number += 1
     
@@ -251,21 +318,34 @@ var table = document.getElementById("myTable");
 
 function price_kol(number){
     
-    var price = document.getElementById(`price-${number}`).value
+    var price_selling = document.getElementById(`price_selling`).innerHTML
     var price_kol = document.getElementById(`pricekol-${number}`)
 
     var tedad = document.getElementById(`tedad-${number}`).value
 
-    prices = price *tedad
+    prices = price_selling * tedad
     price_kol.innerText = `${prices}`
-    
-   
     
 
 
 }
 
-
+function select_customer(customer,phone) {
+    btn_new_customer =document.getElementById("btn_new_customer");
+    btn_select_customer  =document.getElementById("btn_select_customer");  
+    name_customer  =document.getElementById("name_customer");  
+    get_customer  = document.getElementById("get_customer");  
+    phone_customer  =document.getElementById("phone_customer");  
+    btn_new_customer.style.display = "none"
+    btn_select_customer.style.display = "none"
+    name_customer.style.display = "flex"
+    name_customer.value = `${customer}`
+    get_customer.value = `${customer}`
+    phone_customer.value = `${phone}`
+    name_customer.disabled = true
+    phone_customer.disabled = true
+    
+}
 
 
 

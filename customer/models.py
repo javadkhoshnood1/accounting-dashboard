@@ -5,7 +5,7 @@ from accounts.models import User
 class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     fullname = models.CharField(max_length=200, null=True, blank=True, verbose_name="نام و نام خانوادگی")
-    phone = models.CharField(max_length=12, verbose_name="شماره تماس")
+    phone = models.CharField(max_length=12,null=True, blank=True, verbose_name="شماره تماس")
     is_active = models.BooleanField(default=True, verbose_name="فعال")
     is_paid = models.BooleanField(default=False, verbose_name="پرداخت شده ")
     price = models.BigIntegerField(default=0,verbose_name="حساب در فروشگاه")
@@ -38,7 +38,7 @@ class Payments(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     discription = models.TextField(max_length=300, null=True, blank=True, verbose_name="توضیحات مدیر")
-    price_paid = models.BigIntegerField(default=0,verbose_name=" پول  پرداختی لحظه ای   ")
+    price_paid = models.BigIntegerField(default=0,verbose_name=" پول  پرداختی    ")
     created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True, verbose_name="تاریخ اضافه شدن")
 
     def created_data(self):

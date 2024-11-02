@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+راهنمایی جامع نرم افزار 
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="header d-flex item-center bg-white width-100 border-bottom ">
+        <div class="header__right d-flex flex-grow-1 item-center">
+            <span class="bars"></span>
+                <img style="margin-right: 5px;" width="100" height="45" src="{% static 'img/logo3.png' %}"/>
+                /
+                        <a style="text-decoration: none;" href="{% url 'home:index' %}" title="پیشخوان">پیشخوان</a>/
+                        <a style="text-decoration: none;" href="{% url 'about:guidance-us' %}" title="پیشخوان">راهنمایی جامع نرم افزار</a>/
+        </div>
+        <div class="header__left d-flex flex-end item-center margin-top-2">
+            <div class="notification" style="margin-left: 8px;">
+                <div class="dropdown__notification">
+                    <div class="content__notification">
+                        <span class="font-size-13">موردی برای نمایش وجود ندارد</span>
+                    </div>
+                </div>
+            </div>
+            <a
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#logout"
+            data-bs-whatever="@mdo">
+                <img width="35" height="35" src="{% static 'img/logout2.png' %}"/>
+        </a>
+        </div>
+    </div>
+    <div class="main-content" style="background-color: #dcdcdc;">
+        <div class="user-info bg-white padding-30 font-size-13">
+            <div class="row mb-4">
+                <div class="col-lg-12" >
+<p style="font-size: 22px;font-family: avini;" class="text-center">                    راهنمایی جامع نرم افزار                   
+</p>
+                </div>
+                <div class="col-lg-12">
+                    <label class="font-size-15">بخش اول سایدبار : </label> <span class="font-size-15"> پیشخوان </span>
+                    <div class="alert alert-success">
+                        در این بخش شما به تجزیه و تحلیل فروشگاه خود می پردازید یعنی گزارش مشتریان و گزارش محصولات و کل فروش و خرید و کل سود شما و ... همگی در این بخش قابل مشاهده و تجزیه وتحلیل خواهد بود 
+                    </div>
+                </div>
+                <hr/>
+                <div class="col-lg-12">
+                    <label class="font-size-15">بخش دوم سایدبار : </label> <span class="font-size-15"> خرید محصولات </span>
+                    <div class="alert alert-success">
+                        در این بخش شما میتوانید محصولات و یا بار جدیدی که شرکت یا شخص خاصی برای شما اورده است را ثبت کنید و اطللاعات شرکت فروشنده مثل نام و شماره تماس را در ذخیره کنید و همچنین از قسمت انتخاب محصول از محصولات به تعداد محصول موجود خود بیافزایید یا محصول جدیدی که در فروشگاه شما موجود نیست را خریداری کنید 
+                    </div>
+                    <div class="alert alert-danger">
+                        توجه داشته باشید که اگر گزینه محصول جدید را انتخاب کردید بعد از ثبت فاکتور شما باید قیمت فروش و درصد سود خود و دسته بندی ان محصول را تعیین کنید تا محصول شما درصد سود ان صفر درصد نباشد !!
+                    </div>
+                </div>
+                <hr/>
+                <div class="col-lg-12">
+                    <label class="font-size-15">بخش سوم سایدبار : </label> <span class="font-size-15"> فروش محصولات </span>
+                    <div class="alert alert-success">
+                        
+                        .در این بخش شما می توانید محصولات خود را از طریق دکمه انتخاب مشتری از مشتریان به  مشتریان قبلی و با انتخاب دکمه مشتری جدید  به مشتری جدید فروشگاه تان بفروشید
+                    ثبت شماره تماس مشتری برای پیگیری باقی مانده حسابتان مهم می باشد
+                    </div>
+                    <div class="alert alert-danger">
+                        توجه داشته باشید که تعداد محصولات را باید با توجه به موجودی ان محصول  انتخاب کنید 
+                    </div>
+                    <div class="alert alert-danger">
+                         شما بعد از انتخاب محصول برای فروش قیمت فروش ان محصول برای مشتری در نظر گرفته می شود و بعد از وارد کردن تعداد محصول جمع کل قیمت ان محصول به صورت خودکار محسابه می شود 
+                   
+                   .تخفیف را هم میتوانید صفر درصد یا هر درصد خاصی لحاض کنید . </div>
+                </div>
+                <
+                <hr/>
+                <div class="col-lg-12">
+                    <label class="font-size-15">بخش چهارم سایدبار : </label> <span class="font-size-15">  محصولات </span>
+                    <div class="alert alert-success">
+                        در این بخش شما می توانید به تمامی محصولات جور یا ناموجود فروشگاه تان دسترسی داشته باشید شما با گزینه جستجو و محصولات موجود یا ناموجود یا دسته بندی محصولات محصولات خود را فیلتر کنید .
+                    </div>
+                    <div class="alert alert-warning">
+                        با انتخاب هر یک از محصولات به صفحه جزئیات محصول وارد شده و در ان قسمت شما میتوانید نام محصول و دسته بندی و درصد سود ان محصول را تعیین کنید 
+                    </div>
+                </div>
+
+                <hr/>
+                <div class="col-lg-12">
+                    <label class="font-size-15">بخش پنجم سایدبار : </label> <span class="font-size-15">  مشتریان </span>
+                    <div class="alert alert-success">
+                        شما در این بخش به تمامی مشتریان فروشگاه خود دسترسی دارید و از طریق جستجو و مشتریان بی حساب و مشتریان دارای حساب می توانید مشتریان خود را فیلتر کنید . 
+                    </div>
+                    <div class="alert alert-warning">
+                        با انتخاب هریک از مشتریان به صفحه جزئیات مشتریان و در این صفحه جزئیات حساب مشتری دسترسی خواهید داشت . از کزینه پرداخت حساب می توانید باقی مانده حساب مشتری را با هرمبلغی دلخواهی به صورت قسطی یا کامل پرداخت کنید و از طریق گزینه لیست پرداخت ها به تمامی پرداخت های مشتری دسترسی خواهید داشت
+                    </div>
+                </div>
+                <hr/>
+                <div class="col-lg-12">
+                    <label class="font-size-15">بخش ششم سایدبار : </label> <span class="font-size-15">  دسته بندی ها  </span>
+                    <div class="alert alert-success">
+                        در این بخش تمامی دسته بندی ها موجود و تعدا محصولات زیر مجموعه ار دسته بندی را مشاهده کرده 
+                    </div>
+                   
+                </div>
+
+
+                <hr/>
+                <div class="col-lg-12">
+                    <label class="font-size-15">بخش هفتم سایدبار : </label> <span class="font-size-15">  خریدهای من  </span>
+                    <div class="alert alert-success">
+                        در این بخش شما به تمامی خرید هایی که از قسمت خرید محصولات انجام داده اید دسترسی خواهید داشت و میتوانید با جستجو نام شرکت یا فروشنده این لیست را فیلتر کنید  
+                    </div>
+                    <div class="alert alert-warning">
+                        با انتخاب هر یک از فاکتور ها به صفحه جزئیات فاکتور می روید و در اسن صفحه امکان پرینت فاکتور برای شما امکان پذیر می باشد  
+                    </div>
+                </div>
+
+                <hr/>
+                <div class="col-lg-12">
+                    <label class="font-size-15">بخش هشتم سایدبار : </label> <span class="font-size-15">  فروش های  من  </span>
+                    <div class="alert alert-success">
+                        در این بخش به تمامی فاکتور های فروش محصولات که از قسمت فروش محصولات انجام داده اید دسترسی خواهید داشت 
+                    </div>
+                    <div class="alert alert-warning">
+                        با انتخاب هر یک از فاکتور ها به صفحه جزئیات فاکتور می روید و در این صفحه امکان پرینت فاکتور فروش را خواهید داشت و از طریق دکمه کل صورتحاسب مشتری به جزئیات حساب مشتری و گرداخت وجه می روید.
+                    </div>
+                </div>
+                <hr/>
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="alert alert-secondary" style="font-family: avini;font-size: 22px;">
+                        برای اطلاعات و راهنمایی بیشتر با ادمین سایت به شماره : 09021632566 تماس حاص فرمایید .
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock  %}

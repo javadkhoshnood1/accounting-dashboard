@@ -2,7 +2,7 @@
 {% load static %}
 {% load humanize %}
 {% block title %}
-جزئیات خرید  من 
+جزئیات فروش  من 
 {% endblock %}
 
 {% block content %}
@@ -13,8 +13,8 @@
                 <img style="margin-right: 5px;" width="100" height="45" src="{% static 'img/logo3.png' %}"/>
                 /
                         <a style="text-decoration: none;" href="{% url 'home:index' %}" title="پیشخوان">پیشخوان</a>/
-                        <a style="text-decoration: none;" href="{% url 'shopping:list_shop' %}" title="پیشخوان">لیست خرید های من  </a>/
-                        <a style="text-decoration: none;" href="{% url 'shopping:detail_shop' invoice.id %}" title="پیشخوان">{{invoice.name_company}}</a>
+                        <a style="text-decoration: none;" href="{% url 'sale:list_sale' %}" title="پیشخوان">لیست فروش های من  </a>/
+                        <a style="text-decoration: none;" href="{% url 'sale:detail_sale' invoice.id %}" title="پیشخوان">{{invoice.customer.fullname}}</a>
         </div>
         <div class="header__left d-flex flex-end item-center margin-top-2">
             <div class="notification" style="margin-left: 8px;">
@@ -41,10 +41,10 @@
         <div class="tab__box" style="padding: 20px 20px;">
             
             <div class="d-flex justify-content-center align-items-center">
-                <p style="color: #2B4A83;font-family: avini;font-size: 22px;">فاکتور خرید </p>
+                <p style="color: #2B4A83;font-family: avini;font-size: 22px;">فاکتور فروش </p>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-md-4 d-flex justify-content-center align-items-center">نام شرکت :{{invoice.name_company}} / {{invoice.phone_company}}</div>
+                <div class="col-lg-4 col-md-4 d-flex justify-content-center align-items-center">نام مشتری  :{{invoice.customer.fullname}} / {{invoice.customer.phone}}</div>
                 <div class="col-lg-4 col-md-4 d-flex justify-content-center align-items-center">نام فروشگاه :{{request.user.name_shop}}</div>
                 <div class="col-lg-4 col-md-4 d-flex justify-content-center align-items-center">{{invoice.created_date}}</div>
                 
@@ -66,7 +66,7 @@
                     <tr>
                         <td>{{product.id}}</td>
                         <td>{{product.product.title}}</td>
-                        <td>{{product.price|intcomma:0}}تومان </td>
+                        <td>{{product.price_selling|intcomma:0}}تومان </td>
                         <td>{{product.tedad}}عدد</td>
                         <td>{{product.price_kol|intcomma:0}}تومان </td>
                     </tr>
@@ -89,19 +89,17 @@
                     <p style="color: black;"> {{invoice.off}} درصد</p>                        
                     </div>
                 </div>
-                <div class="row d-flex justify-content-end  ">
-                    <div class="col-2 p-2 d-flex justify-content-center  bg-secondary" style="color: white;">کرایه  : </div>
-                    <div class="col-3 d-flex justify-content-center p-2 bg-secondary " style="color: white;">
-                        <p style="color: black;"> {{invoice.keriyeh|intcomma:0}}تومان</p>                        
-    
-                    </div>
-                </div>
+                
                 <div class="row d-flex justify-content-end  ">
                     <div class="col-lg-7">
                         <button onclick="window.print()" class=" btn-sm btn-tosi">
                             چاپ فاکتور
                         </button>
+                        <a href="{% url 'customer:detail_customer' invoice.customer.id %}" class=" btn-sm btn-outline-tosi text-decoration-none">
+                            کل صورتحساب مشتری 
+                        </a>
                     </div>
+                        
                     <div class="col-2 p-2 d-flex justify-content-center  bg-secondary" style="color: white;">جمع نهایی : </div>
                     <div class="col-3 d-flex justify-content-center p-2 bg-secondary " style="color: white;">
                         <p style="color: black;"> {{invoice.last_price|intcomma:0}}تومان</p>                        

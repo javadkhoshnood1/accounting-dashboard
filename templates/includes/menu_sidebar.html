@@ -29,9 +29,14 @@
       <li class="item-li i-my__peyments"><a style="text-decoration: none;color: black;"  href="{% url 'shopping:new_shop' %}">خرید محصولات</a></li>
       {% endif %}
 
+      {% if request.resolver_match.url_name == 'new_sale' %}
+      <li class="item-li i-my__peyments is-active"><a style="text-decoration: none;color: black;"  href="{% url 'sale:new_sale' %}">فروش محصولات</a></li>
 
+      {% else %}
+
+      <li class="item-li i-my__peyments"><a style="text-decoration: none;color: black;"  href="{% url 'sale:new_sale' %}">فروش محصولات</a></li>
+      {% endif %}
       
-         <li class="item-li i-my__peyments"><a style="text-decoration: none;color: black;"  href="mypeyments.html">فروش محصولات</a></li>
 
 
 
@@ -67,14 +72,45 @@
   
         <li class="item-li i-checkout__request "><a style="text-decoration: none;color: black;"  href="{% url 'shopping:list_shop' %}">خرید های من  </a></li>
         {% endif %}
-        <li class="item-li i-banners"><a  style="text-decoration: none;color: black;" href="banners.html">فروش های من </a></li>
-        <li class="item-li i-slideshow"><a style="text-decoration: none;color: black;"  href="slideshow.html">تراکنش های من </a></li>
-        <li class="item-li i-notification__management"><a style="text-decoration: none;color: black;"  href="notification-management.html">هشدار ها </a>
-          <li class="item-li i-tickets"><a  style="text-decoration: none;color: black;" href="tickets.html"> تیکت ها</a></li>
-          <li class="item-li i-user__inforamtion"><a style="text-decoration: none;color: black;"  href="user-information.html">اطلاعات کاربری</a></li>
 
-          <li class="item-li i-articles"><a style="text-decoration: none;color: black;"  href="articles.html">راهنمایی نرم افزار</a></li>
-        <li class="item-li i-transactions"><a style="text-decoration: none;color: black;"  href="transactions.html">درباره ما </a></li>
+
+        {% if request.resolver_match.url_name == 'list_sale' or request.resolver_match.url_name == 'detail_sale' %}
+        <li class="item-li i-banners is-active"><a  style="text-decoration: none;color: black;" href="{% url 'sale:list_sale' %}">فروش های من </a></li>
+  
+        {% else %}
+  
+        <li class="item-li i-banners"><a  style="text-decoration: none;color: black;" href="{% url 'sale:list_sale' %}">فروش های من </a></li>
+        {% endif %}
+
+
+       
+
+
+          {% if request.resolver_match.url_name == 'tickets'  %}
+          <li class="item-li i-tickets is-active"><a  style="text-decoration: none;color: black;" href="{% url 'accounts:tickets' %}"> تیکت ها</a></li>
+    
+          {% else %}
+    
+          <li class="item-li i-tickets"><a  style="text-decoration: none;color: black;" href="{% url 'accounts:tickets' %}"> تیکت ها</a></li>
+            {% endif %}
+
+
+            {% if request.resolver_match.url_name == 'edit-profile'  %}
+            <li class="item-li i-user__inforamtion is-active"><a style="text-decoration: none;color: black;"  href="{% url 'accounts:edit-profile' %}">اطلاعات کاربری</a></li>
+      
+            {% else %}
+      
+            <li class="item-li i-user__inforamtion"><a style="text-decoration: none;color: black;"  href="{% url 'accounts:edit-profile' %}">اطلاعات کاربری</a></li>
+            {% endif %}
+
+            {% if request.resolver_match.url_name == 'edit-profile'  %}
+            <li class="item-li i-articles is-active"><a style="text-decoration: none;color: black;"  href="{% url 'about:guidance-us' %}">راهنمایی نرم افزار</a></li>
+      
+            {% else %}
+      
+            <li class="item-li i-articles"><a style="text-decoration: none;color: black;"  href="{% url 'about:guidance-us' %}">راهنمایی نرم افزار</a></li>
+            {% endif %}
+
         <!-- <li class="item-li i-checkouts"><a style="text-decoration: none;color: black;"  href="checkouts.html">تسویه حساب ها</a></li> -->
         <!-- <li class="item-li i-my__peyments"><a style="text-decoration: none;color: black;"  href="mypeyments.html">پرداخت های من</a></li>
         <li class="item-li i-ads"><a style="text-decoration: none;color: black;"  href="ads.html">تبلیغات</a></li>
