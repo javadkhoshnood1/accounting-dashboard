@@ -4,10 +4,23 @@ from django.views.generic import TemplateView
 from .models import Product,Category
 from django.views import View
 from django.contrib import messages
+
+
+
+def check_mojodi_product(request):
+    products = Product.objects.filter(user=request.user)
+    for i in  products:
+        if i.mojodi == 0:
+            i.is_mojod == False
+        else:
+            i.mojodi == True
+        i.save()
+
 class ListProductView(TemplateView):
     template_name = "product/list.html"
 
     def get(self, request, *args, **kwargs):
+        check_mojodi_product(request)
         products = Product.objects.filter(user=request.user)
         categories = Category.objects.filter(user=request.user).order_by("-created_at")
         search_p = request.GET.get("search_p")

@@ -8,9 +8,9 @@ class Customer(models.Model):
     phone = models.CharField(max_length=12,null=True, blank=True, verbose_name="شماره تماس")
     is_active = models.BooleanField(default=True, verbose_name="فعال")
     is_paid = models.BooleanField(default=False, verbose_name="پرداخت شده ")
-    price = models.BigIntegerField(default=0,verbose_name="حساب در فروشگاه")
-    price_paid_all = models.BigIntegerField(default=0,verbose_name=" پول  پرداختی  ای کل    ")
-    price_mandeh = models.BigIntegerField(default=0,verbose_name="باقی مانده در فروشگاه")
+    price = models.PositiveBigIntegerField(default=0,verbose_name="حساب در فروشگاه")
+    price_paid_all = models.PositiveBigIntegerField(default=0,verbose_name=" پول  پرداختی  ای کل    ")
+    price_mandeh = models.PositiveBigIntegerField(default=0,verbose_name="باقی مانده در فروشگاه")
     discription = models.TextField(max_length=300, null=True, blank=True, verbose_name="توضیحات مدیر")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="تاریخ  ")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="تاریخ اضافه شدن")
@@ -38,7 +38,7 @@ class Payments(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     discription = models.TextField(max_length=300, null=True, blank=True, verbose_name="توضیحات مدیر")
-    price_paid = models.BigIntegerField(default=0,verbose_name=" پول  پرداختی    ")
+    price_paid = models.PositiveBigIntegerField(default=0,verbose_name=" پول  پرداختی    ")
     created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True, verbose_name="تاریخ اضافه شدن")
 
     def created_data(self):

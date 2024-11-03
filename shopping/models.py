@@ -6,9 +6,9 @@ from product.models import Product
 class ProductItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product,null=True,on_delete=models.SET_NULL)
-    price = models.BigIntegerField(default=0, null=True, blank=True, verbose_name="قیمت خرید")
+    price = models.PositiveBigIntegerField(default=0, null=True, blank=True, verbose_name="قیمت خرید")
     tedad = models.PositiveBigIntegerField(default=0,verbose_name="موجودی")
-    price_kol = models.BigIntegerField(default=0, null=True, blank=True)
+    price_kol = models.PositiveBigIntegerField(default=0, null=True, blank=True)
     created_at = models.DateField(auto_now_add=True, blank=True, null=True, verbose_name="تاریخ افزودن محصول")
 
     class Meta:
@@ -28,10 +28,10 @@ class InvoiceShop(models.Model):
     name_company = models.CharField(max_length=255,verbose_name="شرکت خرید")
     phone_company = models.CharField(max_length=255,null=True,blank=True,verbose_name="شماره شرکت ")
     created_at = models.DateField(auto_now_add=True, blank=True, null=True, verbose_name="تاریخ افزودن محصول")
-    off = models.IntegerField(default=0, null=True, blank=True, verbose_name="تخفیف  شرکت ")
-    keriyeh = models.BigIntegerField(default=0, null=True, blank=True, verbose_name="تخفیف  شرکت ")
-    price_nahayi = models.BigIntegerField(default=0, null=True, blank=True)
-    last_price = models.BigIntegerField(default=0, null=True, blank=True)
+    off = models.PositiveBigIntegerField(default=0, null=True, blank=True, verbose_name="تخفیف  شرکت ")
+    keriyeh = models.PositiveBigIntegerField(default=0, null=True, blank=True, verbose_name="تخفیف  شرکت ")
+    price_nahayi = models.PositiveBigIntegerField(default=0, null=True, blank=True)
+    last_price = models.PositiveBigIntegerField(default=0, null=True, blank=True)
 
 
     class Meta:

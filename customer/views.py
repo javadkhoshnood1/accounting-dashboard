@@ -4,8 +4,20 @@ from django.views.generic import TemplateView,DetailView
 # Create your views here.
 from .models import Customer,Payments
 from django.contrib import messages
+
+
+def check_price_customer(request):
+    customers = Customer.objects.filter(user=request.user)
+    for i in customers:
+        if i.price_mandeh == 0:
+            i.is_paid = True
+        else:
+            i.is_paid = False
+        i.save()
+
 class ListCustomerView(View):
     def get(slf,request):
+        check_price_customer(request)
         customers = Customer.objects.filter(user=request.user)
         search_customer =request.GET.get("search_customer")
         available = request.GET.get("available")

@@ -6,9 +6,32 @@ from django.contrib import messages
 from .models import User
 from django.contrib.auth import login,logout,authenticate
 from .models import Ticket
-class DashboardView(TemplateView):
-    template_name = "accounts/dashborad.html"
+from product.models import Product,Category
+from customer.models import Customer,Payments
+from sale.models import InvoiceSale
+from shopping.models import InvoiceShop
+from product.views import check_mojodi_product
+from customer.views import check_price_customer
+class DashboardView(View):
 
+    def get(self,request, **kwargs):
+        check_mojodi_product(request)
+        check_price_customer(request)
+        all_product = Product.objects.filter(user=request.user).count()
+        is_mojod_product = Product.objects.filter(user=request.user).filter(is_mojod=True).count()
+        not_mojod_product = Product.objects.filter(user=request.user).filter(is_mojod=False).count()
+        all_customer = Customer.objects.filter(user=request.user).count()
+        is_paid_customer = Customer.objects.filter(user=request.user).filter(is_paid=True).count()
+        not_paid_customer = Customer.objects.filter(user=request.user).filter(is_paid=False).count()
+        sales = InvoiceSale.objects.filter(user=request.user)
+        shops = InvoiceShop.objects.filter(user=request.user)
+        sale_prices = 0
+        shop_prices = 0
+        for i in shops:
+            shop_prices += i.last_price
+        for i in sales:
+            sale_prices += i.last_price
+        return render(request,"accounts/dashborad.html",{"shop_prices":shop_prices,"all_customer":all_customer,"all_product":all_product,"is_mojod_product":is_mojod_product,"not_mojod_product":not_mojod_product,"not_paid_customer":not_paid_customer,"is_paid_customer":is_paid_customer ,"sale_prices":sale_prices})
 
 
 class LoginView(View):
