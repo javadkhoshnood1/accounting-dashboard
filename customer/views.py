@@ -56,6 +56,9 @@ class DetailCustomerView(View):
         return render(request,"customer/detail.html",{"customer":customer,"payments":payments})
     
     
+
+
+
     def post(self,request,*args,**kwargs):
         pay_price = request.POST.get("pay_price")
         id = request.POST.get("id")
